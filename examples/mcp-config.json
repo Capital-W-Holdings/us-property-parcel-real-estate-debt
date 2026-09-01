@@ -1,0 +1,9 @@
+{
+  "_comment": "Drop the mcpServers block into any MCP client that speaks Streamable HTTP. No credentials are required for the eight free tools.",
+  "mcpServers": {
+    "dfx-real-estate": {
+      "type": "http",
+      "url": "https://exchange-production-9123.up.railway.app/mcp"
+    }
+  }
+}
