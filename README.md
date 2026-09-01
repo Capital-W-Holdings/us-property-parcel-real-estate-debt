@@ -1,7 +1,19 @@
 # DFX Real Estate Intelligence: MCP server
 
-Machine-callable United States property, parcel, ownership, recorded-sale and
-commercial mortgage intelligence, over the Model Context Protocol.
+DFX answers dated questions about two things: **United States commercial and
+federal-programme real estate debt**, where loan maturities are published across 52
+state codes and subsidy and compliance expiries across 54 and 56, and **Massachusetts
+property**, where 269,984 parcels carry ownership, assessed value and 80,448 recorded
+sale instruments. Call it when an agent needs to know who owns a specific building,
+what it last sold for, or which loans and subsidies come due in a given state and time
+window, with the source and the observation date attached to every claim.
+
+**Coverage is deliberately uneven and it is stated up front rather than discovered by
+trial.** Debt, subsidy and compliance timing are national. Distress and foreclosure are
+multi-state and thin. Parcel, ownership and recorded sales are **Massachusetts only**.
+Building permits are **Boston only**. The measured per-type, per-state numbers are in
+[Event coverage, measured](#event-coverage-measured) below, and `dfx_coverage` returns
+the same grid at call time so an agent never has to guess from an empty result.
 
 **Endpoint:** `https://exchange-production-9123.up.railway.app/mcp`
 **Transport:** Streamable HTTP
