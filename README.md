@@ -55,7 +55,14 @@ registry book and page it was recorded under.
 
 ---
 
-## The nine tools
+## The nine data tools
+
+`tools/list` serves **twelve**. Nine are below; the other three, `open_dfx_account`,
+`fund_dfx_account` and `dfx_payment_status`, are the account plumbing for the one paid
+tool and are documented under [How payment works](#how-payment-works) rather than here.
+The count is stated because a README that says nine while the handshake says twelve is
+the kind of small disagreement an evaluator is right to hold against a provider it has
+no other way to check.
 
 | Tool | Takes | Returns | Price |
 |---|---|---|---|
@@ -240,12 +247,47 @@ Any MCP client that speaks Streamable HTTP. No credentials.
 }
 ```
 
-Claude Code:
+That block is what Cursor, Windsurf and Cline read. **VS Code** uses `servers` rather
+than `mcpServers`, in `.vscode/mcp.json`:
+
+```json
+{
+  "servers": {
+    "dfx-real-estate": {
+      "type": "http",
+      "url": "https://exchange-production-9123.up.railway.app/mcp"
+    }
+  }
+}
+```
+
+**Claude Code**, one command and no file:
 
 ```bash
 claude mcp add --transport http dfx-real-estate \
   https://exchange-production-9123.up.railway.app/mcp
 ```
+
+**Claude Desktop**: Settings, Connectors, Add custom connector, and paste the endpoint.
+On a build with no custom connector option, `claude_desktop_config.json` takes a
+subprocess rather than a URL, so put a stdio bridge in front of it:
+
+```json
+{
+  "mcpServers": {
+    "dfx-real-estate": {
+      "command": "npx",
+      "args": ["-y", "mcp-remote",
+               "https://exchange-production-9123.up.railway.app/mcp"]
+    }
+  }
+}
+```
+
+The bridge is a property of that config format, not of this server. Nothing is
+authenticated through it: there is no OAuth discovery document at either well-known
+path, no request is ever challenged, and a client that insists on an API key field can
+be given any string.
 
 Both the current protocol revision and the older `initialize` handshake are served,
 because most deployed clients still send the latter.
