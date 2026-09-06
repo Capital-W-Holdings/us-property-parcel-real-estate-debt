@@ -36,7 +36,7 @@ empty list, so this server refuses unknown arguments with the served vocabulary
 attached, and refuses to sell you a result set that would arrive empty.
 
 > Every number on this page is measured against production, not typed. Last measured
-> **2026-09-05**. Call `dfx_coverage` for the same grid at the moment you read it.
+> **2026-09-06**. Call `dfx_coverage` for the same grid at the moment you read it.
 
 ---
 
@@ -187,8 +187,8 @@ different sizes on purpose and both numbers are true: an event has to be promote
 single place, a loan only has to be filed, so the 19,881 loans on the tape are reached
 here while 592 maturity events are reachable through the free search.
 
-**How many rows your dollar actually buys.** Of the 19,881 loans, 1,789 mature inside
-the default 548-day window, and they are not evenly spread. Measured 2026-09-05:
+**How many rows your dollar actually buys.** Of the 19,881 loans, 1,787 mature inside
+the default 548-day window, and they are not evenly spread. Measured 2026-09-06:
 
 | State | Loans maturing in the next 548 days |
 |---|---|
@@ -219,7 +219,7 @@ the default 548-day window, and they are not evenly spread. Measured 2026-09-05:
 1. Widen `within_days` to reach further out; the price does not move with the row count
 or the window.
 
-123 of those 1,789 carry no single state: a loan secured by several
+123 of those 1,787 carry no single state: a loan secured by several
 buildings has no property anchor, so a state filter cannot reach it. Those are reached
 through the free `get_property_record`.
 
