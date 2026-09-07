@@ -36,7 +36,7 @@ empty list, so this server refuses unknown arguments with the served vocabulary
 attached, and refuses to sell you a result set that would arrive empty.
 
 > Every number on this page is measured against production, not typed. Last measured
-> **2026-09-06**. Call `dfx_coverage` for the same grid at the moment you read it.
+> **2026-09-07**. Call `dfx_coverage` for the same grid at the moment you read it.
 
 ---
 
@@ -125,7 +125,7 @@ Massachusetts and New York: 95,494 instruments over 118,584 property links.
 
 ### Event coverage, measured
 
-71,875 publishable events across 16 types and 13 sources.
+71,539 publishable events across 14 types and 13 sources.
 
 | Event type | States | Published |
 |---|---|---|
@@ -136,24 +136,21 @@ Massachusetts and New York: 95,494 instruments over 118,584 property links.
 | `CERTIFICATE_OF_OCCUPANCY` | 1 | 2,768 |
 | `DEMOLITION_FILED` | 1 | 881 |
 | `USE_CONVERSION_PERMITTED` | 1 | 849 |
-| `LOAN_MATURITY_SCHEDULED` | 40 | 592 |
-| `DISTRESS_FLAG_RAISED` | 26 | 188 |
-| `FORECLOSURE_EVENT` | 22 | 142 |
-| `LEASE_EXPIRING` | 25 | 94 |
+| `LOAN_MATURITY_SCHEDULED` | 40 | 297 |
+| `DISTRESS_FLAG_RAISED` | 26 | 167 |
+| `FORECLOSURE_EVENT` | 22 | 128 |
+| `LEASE_EXPIRING` | 25 | 90 |
 | `PERMIT_STATUS_CHANGED` | 0 | 13 |
 | `LOAN_MODIFIED` | 5 | 12 |
 | `BANKRUPTCY_EVENT` | 4 | 4 |
-| `COMPANY_CONTRACTED` | 1 | 1 |
-| `LEASE_TERM_REVISED` | 1 | 1 |
 
-`CERTIFICATE_OF_OCCUPANCY`, `COMPANY_CONTRACTED`, `DEMOLITION_FILED`,
-`LEASE_TERM_REVISED`, `PERMIT_ISSUED`, `USE_CONVERSION_PERMITTED` are Massachusetts
-only. `COMPLIANCE_PERIOD_ENDING`, `LOAN_MATURITY_SCHEDULED`, `SUBSIDY_CONTRACT_EXPIRING`
-are national. Multi-state, with the number of states each reaches:
-`DISTRESS_FLAG_RAISED` (26), `LEASE_EXPIRING` (25), `FORECLOSURE_EVENT` (22),
-`LOAN_MODIFIED` (5), `BANKRUPTCY_EVENT` (4), `PROPERTY_SOLD` (2).
-`PERMIT_STATUS_CHANGED` carries rows that resolve to no state at all, so a state filter
-cannot reach it.
+`CERTIFICATE_OF_OCCUPANCY`, `DEMOLITION_FILED`, `PERMIT_ISSUED`,
+`USE_CONVERSION_PERMITTED` are Massachusetts only. `COMPLIANCE_PERIOD_ENDING`,
+`LOAN_MATURITY_SCHEDULED`, `SUBSIDY_CONTRACT_EXPIRING` are national. Multi-state, with
+the number of states each reaches: `DISTRESS_FLAG_RAISED` (26), `LEASE_EXPIRING` (25),
+`FORECLOSURE_EVENT` (22), `LOAN_MODIFIED` (5), `BANKRUPTCY_EVENT` (4), `PROPERTY_SOLD`
+(2). `PERMIT_STATUS_CHANGED` carries rows that resolve to no state at all, so a state
+filter cannot reach it.
 
 ---
 
@@ -185,15 +182,15 @@ deduplicated to one row per loan, up to 200 rows instead of 50, with the populat
 stated so you can tell a complete answer from a truncated one. The two populations are
 different sizes on purpose and both numbers are true: an event has to be promoted to a
 single place, a loan only has to be filed, so the 19,881 loans on the tape are reached
-here while 592 maturity events are reachable through the free search.
+here while 297 maturity events are reachable through the free search.
 
-**How many rows your dollar actually buys.** Of the 19,881 loans, 1,787 mature inside
-the default 548-day window, and they are not evenly spread. Measured 2026-09-06:
+**How many rows your dollar actually buys.** Of the 19,881 loans, 1,780 mature inside
+the default 548-day window, and they are not evenly spread. Measured 2026-09-07:
 
 | State | Loans maturing in the next 548 days |
 |---|---|
-| CA | 334 |
-| NY | 198 |
+| CA | 333 |
+| NY | 197 |
 | TX | 121 |
 | FL | 101 |
 | OH | 67 |
@@ -201,11 +198,11 @@ the default 548-day window, and they are not evenly spread. Measured 2026-09-06:
 | IL | 56 |
 | MI | 56 |
 | PA | 55 |
-| NJ | 53 |
+| NJ | 51 |
 | NV | 43 |
 | VA | 41 |
 | IN | 37 |
-| NC | 35 |
+| NC | 34 |
 | WA | 32 |
 | AZ | 30 |
 | CO | 28 |
@@ -219,7 +216,7 @@ the default 548-day window, and they are not evenly spread. Measured 2026-09-06:
 1. Widen `within_days` to reach further out; the price does not move with the row count
 or the window.
 
-123 of those 1,787 carry no single state: a loan secured by several
+121 of those 1,780 carry no single state: a loan secured by several
 buildings has no property anchor, so a state filter cannot reach it. Those are reached
 through the free `get_property_record`.
 
