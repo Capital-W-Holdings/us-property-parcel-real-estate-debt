@@ -3,7 +3,7 @@
 DFX answers dated questions about two things: **United States commercial and
 federal-programme real estate debt**, where loan maturities are published across
 52 state codes, compliance expiries across 56 and subsidy expiries across
-54, and **property records**, where 291,914 Massachusetts parcels carry
+54, and **property records**, where 291,914 Massachusetts and New York parcels carry
 ownership and assessed value and 95,494 recorded sale instruments cover Massachusetts and New York.
 Call it when an agent needs to know who owns a specific building, what it last sold
 for, or which loans and subsidies come due in a given state and time window, with the
@@ -95,7 +95,7 @@ misread this server.
 | Object | What it is | Resolvable |
 |---|---|---|
 | `parcel` | Massachusetts. The municipal assessor and registry layer, carrying assessed value, land use and recorded sales. | 291,914 |
-| `property` | National. Federal programme multifamily: HUD, LIHTC and FHA. | 90,278 |
+| `property` | National. Federal programme multifamily: HUD, LIHTC and FHA. | 96,165 |
 | `organization` | Owners, managers, lenders and servicers. | not counted separately |
 
 An address may return one, the other, or both.
@@ -125,11 +125,11 @@ Massachusetts and New York: 95,494 instruments over 118,584 property links.
 
 ### Event coverage, measured
 
-74,409 publishable events across 14 types and 13 sources.
+74,232 publishable events across 14 types and 13 sources.
 
 | Event type | States | Published |
 |---|---|---|
-| `PROPERTY_SOLD` | 2 | 43,857 |
+| `PROPERTY_SOLD` | 2 | 43,680 |
 | `COMPLIANCE_PERIOD_ENDING` | 56 | 11,956 |
 | `SUBSIDY_CONTRACT_EXPIRING` | 54 | 4,721 |
 | `PERMIT_ISSUED` | 1 | 4,203 |
@@ -353,6 +353,15 @@ because most deployed clients still send the latter.
 - Which LIHTC compliance periods and HUD subsidy contracts are expiring, and where?
 - What did this parcel last sell for, to whom, and under which book and page?
 - Who owns, manages or lends against this building?
+
+### One page per question, with the measured coverage on it
+
+- [Which commercial real-estate loans mature in a given state and window?](https://dfxintel.com/ai/real-estate-mcp/cre-loan-maturities): 3,422 LOAN_MATURITY_SCHEDULED, 52 states and territories.
+- [Which LIHTC properties are reaching the end of a compliance period?](https://dfxintel.com/ai/real-estate-mcp/lihtc-year-15-data): 11,956 COMPLIANCE_PERIOD_ENDING, 56 states and territories.
+- [Which HUD-subsidised properties have contracts approaching expiry?](https://dfxintel.com/ai/real-estate-mcp/hud-subsidy-expiry-data): 4,721 SUBSIDY_CONTRACT_EXPIRING, 54 states and territories.
+- [Where is commercial real estate in distress, foreclosure or workout?](https://dfxintel.com/ai/real-estate-mcp/distressed-cre-data): 167 DISTRESS_FLAG_RAISED, 128 FORECLOSURE_EVENT, 12 LOAN_MODIFIED, 26 states.
+- [What did this property sell for, and who owns it?](https://dfxintel.com/ai/real-estate-mcp/property-sales-and-ownership-data): 43,680 PROPERTY_SOLD, 2 states.
+- [Which commercial leases are approaching expiry, and who occupies a building?](https://dfxintel.com/ai/real-estate-mcp/commercial-lease-expiry-data): 1,428 LEASE_EXPIRING, 49 states.
 
 ## Questions it is not good at, and will say so
 
