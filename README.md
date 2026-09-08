@@ -2,7 +2,7 @@
 
 DFX answers dated questions about two things: **United States commercial and
 federal-programme real estate debt**, where loan maturities are published across
-40 state codes, compliance expiries across 56 and subsidy expiries across
+52 state codes, compliance expiries across 56 and subsidy expiries across
 54, and **property records**, where 291,914 Massachusetts parcels carry
 ownership and assessed value and 95,494 recorded sale instruments cover Massachusetts and New York.
 Call it when an agent needs to know who owns a specific building, what it last sold
@@ -125,29 +125,29 @@ Massachusetts and New York: 95,494 instruments over 118,584 property links.
 
 ### Event coverage, measured
 
-71,539 publishable events across 14 types and 13 sources.
+74,409 publishable events across 14 types and 13 sources.
 
 | Event type | States | Published |
 |---|---|---|
 | `PROPERTY_SOLD` | 2 | 43,857 |
-| `COMPLIANCE_PERIOD_ENDING` | 56 | 13,549 |
+| `COMPLIANCE_PERIOD_ENDING` | 56 | 11,956 |
 | `SUBSIDY_CONTRACT_EXPIRING` | 54 | 4,721 |
 | `PERMIT_ISSUED` | 1 | 4,203 |
+| `LOAN_MATURITY_SCHEDULED` | 52 | 3,422 |
 | `CERTIFICATE_OF_OCCUPANCY` | 1 | 2,768 |
+| `LEASE_EXPIRING` | 49 | 1,428 |
 | `DEMOLITION_FILED` | 1 | 881 |
 | `USE_CONVERSION_PERMITTED` | 1 | 849 |
-| `LOAN_MATURITY_SCHEDULED` | 40 | 297 |
 | `DISTRESS_FLAG_RAISED` | 26 | 167 |
 | `FORECLOSURE_EVENT` | 22 | 128 |
-| `LEASE_EXPIRING` | 25 | 90 |
 | `PERMIT_STATUS_CHANGED` | 0 | 13 |
 | `LOAN_MODIFIED` | 5 | 12 |
 | `BANKRUPTCY_EVENT` | 4 | 4 |
 
 `CERTIFICATE_OF_OCCUPANCY`, `DEMOLITION_FILED`, `PERMIT_ISSUED`,
 `USE_CONVERSION_PERMITTED` are Massachusetts only. `COMPLIANCE_PERIOD_ENDING`,
-`LOAN_MATURITY_SCHEDULED`, `SUBSIDY_CONTRACT_EXPIRING` are national. Multi-state, with
-the number of states each reaches: `DISTRESS_FLAG_RAISED` (26), `LEASE_EXPIRING` (25),
+`LEASE_EXPIRING`, `LOAN_MATURITY_SCHEDULED`, `SUBSIDY_CONTRACT_EXPIRING` are national.
+Multi-state, with the number of states each reaches: `DISTRESS_FLAG_RAISED` (26),
 `FORECLOSURE_EVENT` (22), `LOAN_MODIFIED` (5), `BANKRUPTCY_EVENT` (4), `PROPERTY_SOLD`
 (2). `PERMIT_STATUS_CHANGED` carries rows that resolve to no state at all, so a state
 filter cannot reach it.
@@ -182,7 +182,7 @@ deduplicated to one row per loan, up to 200 rows instead of 50, with the populat
 stated so you can tell a complete answer from a truncated one. The two populations are
 different sizes on purpose and both numbers are true: an event has to be promoted to a
 single place, a loan only has to be filed, so the 19,881 loans on the tape are reached
-here while 297 maturity events are reachable through the free search.
+here while 3,422 maturity events are reachable through the free search.
 
 **How many rows your dollar actually buys.** Of the 19,881 loans, 1,782 mature inside
 the default 548-day window, and they are not evenly spread. Measured 2026-09-08:
