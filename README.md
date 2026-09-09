@@ -1,5 +1,7 @@
 # DFX Real Estate Intelligence: MCP server
 
+[![DFX Real Estate Intelligence MCP server: quality and maintenance score on Glama](https://glama.ai/mcp/servers/Capital-W-Holdings/us-property-parcel-real-estate-debt/badges/score.svg)](https://glama.ai/mcp/servers/Capital-W-Holdings/us-property-parcel-real-estate-debt)
+
 DFX answers dated questions about two things: **United States commercial and
 federal-programme real estate debt**, where loan maturities are published across
 52 state codes, compliance expiries across 56 and subsidy expiries across
