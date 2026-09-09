@@ -1,5 +1,5 @@
 {
-  "_comment": "Drop the mcpServers block into any MCP client that speaks Streamable HTTP. No credentials are required for the eleven free tools. If your client only launches subprocesses, use the stdio entry instead: it runs bridge/dfx_mcp_stdio.py from this repository, which forwards to the same URL and needs nothing installed.",
+  "_comment": "Drop the mcpServers block into any MCP client that speaks Streamable HTTP. No credentials are required for the eleven free tools. If your client only launches subprocesses, use the stdio entry instead and replace /path/to with wherever you cloned this repository: an MCP client launches the command from its own working directory, not yours, so a relative path will not find the file.",
   "mcpServers": {
     "dfx-real-estate": {
       "type": "http",
@@ -8,7 +8,7 @@
     "dfx-real-estate-stdio": {
       "command": "python3",
       "args": [
-        "bridge/dfx_mcp_stdio.py"
+        "/path/to/us-property-parcel-real-estate-debt/bridge/dfx_mcp_stdio.py"
       ]
     }
   }

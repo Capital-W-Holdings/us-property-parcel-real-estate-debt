@@ -356,11 +356,14 @@ and writes the answer back.
   "mcpServers": {
     "dfx-real-estate": {
       "command": "python3",
-      "args": ["bridge/dfx_mcp_stdio.py"]
+      "args": ["/path/to/us-property-parcel-real-estate-debt/bridge/dfx_mcp_stdio.py"]
     }
   }
 }
 ```
+
+Use an absolute path. An MCP client launches the command from its own working directory,
+not yours, so a relative one will not find the file.
 
 Use the URL directly if your client can. The bridge adds a process and a hop and buys
 nothing when Streamable HTTP is available. It reads the tool list from the live server
