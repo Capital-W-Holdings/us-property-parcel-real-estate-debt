@@ -64,6 +64,24 @@ curl -s https://exchange-production-9123.up.railway.app/mcp \
 That address returns a parcel carrying a recorded sale, with the registry book and
 page it was recorded under.
 
+### If you are a harvester rather than a caller
+
+The endpoint serves the discovery conventions from its own origin, so an index does
+not have to guess and does not have to be told:
+
+| path | what it is |
+|---|---|
+| [`/llms.txt`](https://exchange-production-9123.up.railway.app/llms.txt) | the entry point, for something holding only this host name |
+| [`/.well-known/ard.json`](https://exchange-production-9123.up.railway.app/.well-known/ard.json) | Agentic Resource Discovery catalog |
+| [`/.well-known/mcp/server-cards.json`](https://exchange-production-9123.up.railway.app/.well-known/mcp/server-cards.json) | MCP server card |
+| [`/.well-known/agent-card.json`](https://exchange-production-9123.up.railway.app/.well-known/agent-card.json) | A2A style agent card |
+| [`/agents.txt`](https://exchange-production-9123.up.railway.app/agents.txt) | the agents.txt convention |
+| [`/openapi.json`](https://exchange-production-9123.up.railway.app/openapi.json) | the same capabilities over plain HTTP |
+| [`/robots.txt`](https://exchange-production-9123.up.railway.app/robots.txt) | crawlers and agents are welcome, and it says so |
+
+`agents.txt` names no payment protocol. This server has a priced tool and does not
+speak x402, mpp or ap2: it quotes, mints an account and settles through Stripe.
+
 ---
 
 ## The 13 tools
