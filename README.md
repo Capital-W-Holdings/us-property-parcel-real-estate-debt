@@ -36,7 +36,7 @@ empty list, so this server refuses unknown arguments with the served vocabulary
 attached, and refuses to sell you a result set that would arrive empty.
 
 > Every number on this page is measured against production, not typed. Last measured
-> **2026-09-08**. Call `dfx_coverage` for the same grid at the moment you read it.
+> **2026-09-09**. Call `dfx_coverage` for the same grid at the moment you read it.
 
 ---
 
@@ -185,7 +185,7 @@ single place, a loan only has to be filed, so the 19,881 loans on the tape are r
 here while 3,422 maturity events are reachable through the free search.
 
 **How many rows your dollar actually buys.** Of the 19,881 loans, 1,782 mature inside
-the default 548-day window, and they are not evenly spread. Measured 2026-09-08:
+the default 548-day window, and they are not evenly spread. Measured 2026-09-09:
 
 | State | Loans maturing in the next 548 days |
 |---|---|
@@ -242,8 +242,8 @@ them:
 - No outcome has ever been observed for any prediction in this graph. Nothing served
   here carries a calibrated probability; every score is a ranked signal.
 
-- One street address can carry several records. Measured across 5,807 such clusters:
-  2,685 agree on unit count and are plausibly one asset registered by more than one
+- One street address can carry several records. Measured across 5,863 such clusters:
+  2,741 agree on unit count and are plausibly one asset registered by more than one
   programme, while 3,122 report DIFFERENT unit counts and are probably genuinely different
   buildings at one address, such as a scattered-site development. DFX has merged none of
   them and resolve() says which case you are looking at rather than choosing.
@@ -252,8 +252,8 @@ them:
   pairs out of roughly 100,000 each. An address may resolve to one, the other, or both,
   and they are returned as distinct typed objects rather than merged.
 
-- PROPERTY RECORDS ARE NOT ONE ROW PER BUILDING. 90,278 published property records cover
-  83,664 distinct normalised addresses, so a total computed across them overstates by
+- PROPERTY RECORDS ARE NOT ONE ROW PER BUILDING. 96,165 published property records cover
+  89,345 distinct normalised addresses, so a total computed across them overstates by
   roughly 8%. 245 Park Avenue is one tower and thirteen records, because thirteen
   securitisation trusts each report it. Every row is individually true, which is why the
   distortion is invisible per row. Each record carries address_group_size so you can see
@@ -343,6 +343,29 @@ claude mcp add --transport http dfx-real-estate \
 
 Both the current protocol revision and the older `initialize` handshake are served,
 because most deployed clients still send the latter.
+
+### If your client only speaks stdio
+
+Some clients launch a subprocess and speak JSON-RPC over its pipes; they have no way to
+reach a URL at all. `bridge/dfx_mcp_stdio.py` is the whole adapter for those: one file,
+standard library only, no key, no state. It forwards each message to the endpoint above
+and writes the answer back.
+
+```json
+{
+  "mcpServers": {
+    "dfx-real-estate": {
+      "command": "python3",
+      "args": ["bridge/dfx_mcp_stdio.py"]
+    }
+  }
+}
+```
+
+Use the URL directly if your client can. The bridge adds a process and a hop and buys
+nothing when Streamable HTTP is available. It reads the tool list from the live server
+on every `tools/list`, so an installed copy does not go stale when DFX publishes a new
+event family; there is nothing in it that knows what a family is.
 
 ---
 
