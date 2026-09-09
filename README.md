@@ -29,7 +29,7 @@ the same grid at call time so an agent never has to guess from an empty result.
 **Auth:** none, for everything except one paid tool
 **Registry:** `io.github.Capital-W-Holdings/us-property-parcel-real-estate-debt`
 
-12 tools. 11 are free, unauthenticated and permanent: no key, no signup, no
+13 tools. 12 are free, unauthenticated and permanent: no key, no signup, no
 OAuth. One is priced at **$1.00 per delivered result set** and tells you so before
 it charges you anything.
 
@@ -66,12 +66,13 @@ page it was recorded under.
 
 ---
 
-## The 12 tools
+## The 13 tools
 
 | Tool | Takes | Returns | Price |
 |---|---|---|---|
 | `resolve_address` | address, city?, state? | canonical DFX ids with the match basis and any ambiguity | free |
 | `resolve_organization` | name | entity ids for owners, managers, lenders, servicers | free |
+| `get_occupancy` | see the schema | see the schema | free |
 | `get_property_record` | a DFX id | state, dated events, relationships, debt with maturity dates, recorded sales, provenance | free |
 | `search_property_events` | event_type?, state?, within_days? | dated events with provenance | free |
 | `search_parcels` | filters | parcels by attribute rather than by an address you already knew | free |
