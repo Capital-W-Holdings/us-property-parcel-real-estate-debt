@@ -2,8 +2,8 @@
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "io.github.Capital-W-Holdings/us-property-parcel-real-estate-debt",
   "title": "DFX Real Estate Intelligence",
-  "description": "Free, no key. US commercial real estate: mortgage maturities 52 states, LIHTC and HUD expiries.",
-  "version": "0.12.0",
+  "description": "Free, no key. US commercial real estate: FHA and CMBS loan maturities, LIHTC and HUD expiries.",
+  "version": "0.13.0",
   "websiteUrl": "https://dfxintel.com/ai/real-estate-mcp",
   "repository": {
     "source": "github",
