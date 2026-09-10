@@ -38,7 +38,7 @@ empty list, so this server refuses unknown arguments with the served vocabulary
 attached, and refuses to sell you a result set that would arrive empty.
 
 > Every number on this page is measured against production, not typed. Last measured
-> **2026-09-09**. Call `dfx_coverage` for the same grid at the moment you read it.
+> **2026-09-10**. Call `dfx_coverage` for the same grid at the moment you read it.
 
 ---
 
@@ -205,21 +205,21 @@ different sizes on purpose and both numbers are true: an event has to be promote
 single place, a loan only has to be filed, so the 19,881 loans on the tape are reached
 here while 3,422 maturity events are reachable through the free search.
 
-**How many rows your dollar actually buys.** Of the 19,881 loans, 1,782 mature inside
-the default 548-day window, and they are not evenly spread. Measured 2026-09-09:
+**How many rows your dollar actually buys.** Of the 19,881 loans, 1,792 mature inside
+the default 548-day window, and they are not evenly spread. Measured 2026-09-10:
 
 | State | Loans maturing in the next 548 days |
 |---|---|
-| CA | 333 |
+| CA | 334 |
 | NY | 197 |
-| TX | 121 |
+| TX | 123 |
 | FL | 101 |
-| OH | 67 |
+| OH | 68 |
 | GA | 62 |
-| IL | 56 |
+| IL | 57 |
 | MI | 56 |
 | PA | 55 |
-| NJ | 51 |
+| NJ | 52 |
 | NV | 43 |
 | VA | 41 |
 | IN | 37 |
@@ -228,16 +228,16 @@ the default 548-day window, and they are not evenly spread. Measured 2026-09-09:
 | AZ | 30 |
 | CO | 28 |
 | LA | 24 |
-| MD | 21 |
+| MD | 22 |
+| AL | 21 |
 | SC | 21 |
-| AL | 20 |
 | MO | 20 |
 
 26 further states hold between 1 and 18 loans in that window; Montana and Wyoming hold
 1. Widen `within_days` to reach further out; the price does not move with the row count
 or the window.
 
-121 of those 1,782 carry no single state: a loan secured by several
+123 of those 1,792 carry no single state: a loan secured by several
 buildings has no property anchor, so a state filter cannot reach it. Those are reached
 through the free `get_property_record`.
 
