@@ -146,7 +146,7 @@ Massachusetts and New York: 95,494 instruments over 118,584 property links.
 
 ### Event coverage, measured
 
-74,232 publishable events across 14 types and 13 sources.
+76,770 publishable events across 14 types and 14 sources.
 
 | Event type | States | Published |
 |---|---|---|
@@ -154,9 +154,9 @@ Massachusetts and New York: 95,494 instruments over 118,584 property links.
 | `COMPLIANCE_PERIOD_ENDING` | 56 | 11,956 |
 | `SUBSIDY_CONTRACT_EXPIRING` | 54 | 4,721 |
 | `PERMIT_ISSUED` | 1 | 4,203 |
+| `LEASE_EXPIRING` | 55 | 3,966 |
 | `LOAN_MATURITY_SCHEDULED` | 52 | 3,422 |
 | `CERTIFICATE_OF_OCCUPANCY` | 1 | 2,768 |
-| `LEASE_EXPIRING` | 49 | 1,428 |
 | `DEMOLITION_FILED` | 1 | 881 |
 | `USE_CONVERSION_PERMITTED` | 1 | 849 |
 | `DISTRESS_FLAG_RAISED` | 26 | 167 |
@@ -408,7 +408,7 @@ event family; there is nothing in it that knows what a family is.
 - [Which HUD-subsidised properties have contracts approaching expiry?](https://dfxintel.com/ai/real-estate-mcp/hud-subsidy-expiry-data): 4,721 SUBSIDY_CONTRACT_EXPIRING, 54 states and territories.
 - [Where is commercial real estate in distress, foreclosure or workout?](https://dfxintel.com/ai/real-estate-mcp/distressed-cre-data): 167 DISTRESS_FLAG_RAISED, 128 FORECLOSURE_EVENT, 12 LOAN_MODIFIED, 26 states.
 - [What did this property sell for, and who owns it?](https://dfxintel.com/ai/real-estate-mcp/property-sales-and-ownership-data): 43,680 PROPERTY_SOLD, 2 states.
-- [Which commercial leases are approaching expiry, and who occupies a building?](https://dfxintel.com/ai/real-estate-mcp/commercial-lease-expiry-data): 1,428 LEASE_EXPIRING, 49 states.
+- [Which commercial leases are approaching expiry, and who occupies a building?](https://dfxintel.com/ai/real-estate-mcp/commercial-lease-expiry-data): 3,966 LEASE_EXPIRING, 55 states and territories.
 
 ## Questions it is not good at, and will say so
 
@@ -429,7 +429,7 @@ event family; there is nothing in it that knows what a family is.
 
 ### Served sources
 
-`boston_assessing`, `boston_permits`, `fdic_financials`, `ffiec_ubpr`, `fhfa_pudb_mf`, `hmda_lar`, `hud_fha_multifamily`, `hud_lihtc`, `hud_multifamily_arcgis`, `hud_psh`, `massgis_l3`, `nyc_acris`, `sec_abs_ee`
+`boston_assessing`, `boston_permits`, `fdic_financials`, `ffiec_ubpr`, `fhfa_pudb_mf`, `gsa_pbs_external_lease`, `hmda_lar`, `hud_fha_multifamily`, `hud_lihtc`, `hud_multifamily_arcgis`, `hud_psh`, `massgis_l3`, `nyc_acris`, `sec_abs_ee`
 
 ### Required attribution
 
