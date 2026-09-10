@@ -146,7 +146,7 @@ Massachusetts and New York: 95,494 instruments over 118,584 property links.
 
 ### Event coverage, measured
 
-76,770 publishable events across 14 types and 14 sources.
+76,770 publishable events across 14 types, written by 8 sources on a published allowlist of 14.
 
 | Event type | States | Published |
 |---|---|---|
