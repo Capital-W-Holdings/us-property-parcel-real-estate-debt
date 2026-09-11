@@ -6,7 +6,7 @@ DFX answers dated questions about two things: **United States commercial and
 federal-programme real estate debt**, where loan maturities are published across
 52 state codes, compliance expiries across 56 and subsidy expiries across
 54, and **property records**, where 291,914 Massachusetts and New York parcels carry
-ownership and assessed value and 95,494 recorded sale instruments cover Massachusetts and New York.
+ownership and assessed value and 95,562 recorded sale instruments cover Massachusetts and New York.
 Call it when an agent needs to know who owns a specific building, what it last sold
 for, or which loans and subsidies come due in a given state and time window, with the
 source and the observation date attached to every claim.
@@ -125,7 +125,7 @@ An address may return one, the other, or both.
 
 ### Recorded sales
 
-Massachusetts and New York: 95,494 instruments over 118,584 property links.
+Massachusetts and New York: 95,562 instruments over 118,733 property links.
 
 | Source | Geography | Grain | Buyer | Seller | Repeat sales |
 |---|---|---|---|---|---|
@@ -148,7 +148,7 @@ Massachusetts and New York: 95,494 instruments over 118,584 property links.
 
 ### Event coverage, measured
 
-76,770 publishable events across 14 types, written by 8 sources on a published allowlist of 14.
+83,479 publishable events across 16 types, written by 9 sources on a published allowlist of 14.
 
 | Event type | States | Published |
 |---|---|---|
@@ -157,7 +157,9 @@ Massachusetts and New York: 95,494 instruments over 118,584 property links.
 | `SUBSIDY_CONTRACT_EXPIRING` | 54 | 4,721 |
 | `PERMIT_ISSUED` | 1 | 4,203 |
 | `LEASE_EXPIRING` | 55 | 3,966 |
+| `PORTFOLIO_EXPANDED` | 53 | 3,528 |
 | `LOAN_MATURITY_SCHEDULED` | 52 | 3,422 |
+| `PORTFOLIO_CONTRACTED` | 54 | 3,181 |
 | `CERTIFICATE_OF_OCCUPANCY` | 1 | 2,768 |
 | `DEMOLITION_FILED` | 1 | 881 |
 | `USE_CONVERSION_PERMITTED` | 1 | 849 |
@@ -169,11 +171,12 @@ Massachusetts and New York: 95,494 instruments over 118,584 property links.
 
 `CERTIFICATE_OF_OCCUPANCY`, `DEMOLITION_FILED`, `PERMIT_ISSUED`,
 `USE_CONVERSION_PERMITTED` are Massachusetts only. `COMPLIANCE_PERIOD_ENDING`,
-`LEASE_EXPIRING`, `LOAN_MATURITY_SCHEDULED`, `SUBSIDY_CONTRACT_EXPIRING` are national.
-Multi-state, with the number of states each reaches: `DISTRESS_FLAG_RAISED` (26),
-`FORECLOSURE_EVENT` (22), `LOAN_MODIFIED` (5), `BANKRUPTCY_EVENT` (4), `PROPERTY_SOLD`
-(2). `PERMIT_STATUS_CHANGED` carries rows that resolve to no state at all, so a state
-filter cannot reach it.
+`LEASE_EXPIRING`, `LOAN_MATURITY_SCHEDULED`, `PORTFOLIO_CONTRACTED`,
+`PORTFOLIO_EXPANDED`, `SUBSIDY_CONTRACT_EXPIRING` are national. Multi-state, with the
+number of states each reaches: `DISTRESS_FLAG_RAISED` (26), `FORECLOSURE_EVENT` (22),
+`LOAN_MODIFIED` (5), `BANKRUPTCY_EVENT` (4), `PROPERTY_SOLD` (2).
+`PERMIT_STATUS_CHANGED` carries rows that resolve to no state at all, so a state filter
+cannot reach it.
 
 ---
 
