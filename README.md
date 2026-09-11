@@ -29,7 +29,7 @@ the same grid at call time so an agent never has to guess from an empty result.
 **Auth:** none, for everything except one paid tool
 **Registry:** `io.github.Capital-W-Holdings/us-property-parcel-real-estate-debt`
 
-13 tools. 12 are free, unauthenticated and permanent: no key, no signup, no
+15 tools. 14 are free, unauthenticated and permanent: no key, no signup, no
 OAuth. One is priced at **$1.00 per delivered result set** and tells you so before
 it charges you anything.
 
@@ -38,7 +38,7 @@ empty list, so this server refuses unknown arguments with the served vocabulary
 attached, and refuses to sell you a result set that would arrive empty.
 
 > Every number on this page is measured against production, not typed. Last measured
-> **2026-09-10**. Call `dfx_coverage` for the same grid at the moment you read it.
+> **2026-09-11**. Call `dfx_coverage` for the same grid at the moment you read it.
 
 ---
 
@@ -84,15 +84,17 @@ speak x402, mpp or ap2: it quotes, mints an account and settles through Stripe.
 
 ---
 
-## The 13 tools
+## The 15 tools
 
 | Tool | Takes | Returns | Price |
 |---|---|---|---|
 | `resolve_address` | address, city?, state? | canonical DFX ids with the match basis and any ambiguity | free |
 | `resolve_organization` | name | entity ids for owners, managers, lenders, servicers | free |
-| `get_occupancy` | see the schema | see the schema | free |
+| `get_occupancy` | a property or company id, or a company name with an address | who is observed to occupy a building, or where a company operates, with the evidence tier | free |
 | `get_property_record` | a DFX id | state, dated events, relationships, debt with maturity dates, recorded sales, provenance | free |
 | `search_property_events` | event_type?, state?, within_days? | dated events with provenance | free |
+| `search_bank_cre_exposure` | state?, name?, CRE-to-equity range?, above_guidance?, min_assets_usd?, min_noncurrent_pct?, sort? | FDIC-insured banks by CRE concentration with the guidance screen and UBPR percentile ranks | free |
+| `search_subsidised_housing` | state?, city?, program?, min_waiting_months?, occupancy range?, min_units? | HUD-subsidised projects with units available, occupancy, months on the waiting list, rent, income and HUD spend, one annual capture | free |
 | `search_parcels` | filters | parcels by attribute rather than by an address you already knew | free |
 | `what_can_dfx_answer` | an objective, in natural language | whether DFX can help, which tool to call, the arguments, and a free sample | free |
 | `changes_since` | an opaque cursor | what DFX has **learned** since your cursor | free |
@@ -116,7 +118,7 @@ misread this server.
 | Object | What it is | Resolvable |
 |---|---|---|
 | `parcel` | Massachusetts. The municipal assessor and registry layer, carrying assessed value, land use and recorded sales. | 291,914 |
-| `property` | National. Federal programme multifamily: HUD, LIHTC and FHA. | 96,165 |
+| `property` | National. Federal programme multifamily: HUD, LIHTC and FHA. | 101,991 |
 | `organization` | Owners, managers, lenders and servicers. | not counted separately |
 
 An address may return one, the other, or both.
@@ -206,7 +208,7 @@ single place, a loan only has to be filed, so the 19,881 loans on the tape are r
 here while 3,422 maturity events are reachable through the free search.
 
 **How many rows your dollar actually buys.** Of the 19,881 loans, 1,792 mature inside
-the default 548-day window, and they are not evenly spread. Measured 2026-09-10:
+the default 548-day window, and they are not evenly spread. Measured 2026-09-11:
 
 | State | Loans maturing in the next 548 days |
 |---|---|
@@ -263,9 +265,9 @@ them:
 - No outcome has ever been observed for any prediction in this graph. Nothing served
   here carries a calibrated probability; every score is a ranked signal.
 
-- One street address can carry several records. Measured across 5,863 such clusters:
-  2,741 agree on unit count and are plausibly one asset registered by more than one
-  programme, while 3,122 report DIFFERENT unit counts and are probably genuinely different
+- One street address can carry several records. Measured across 6,114 such clusters:
+  2,764 agree on unit count and are plausibly one asset registered by more than one
+  programme, while 3,350 report DIFFERENT unit counts and are probably genuinely different
   buildings at one address, such as a scattered-site development. DFX has merged none of
   them and resolve() says which case you are looking at rather than choosing.
 
@@ -273,9 +275,9 @@ them:
   pairs out of roughly 100,000 each. An address may resolve to one, the other, or both,
   and they are returned as distinct typed objects rather than merged.
 
-- PROPERTY RECORDS ARE NOT ONE ROW PER BUILDING. 96,165 published property records cover
-  89,345 distinct normalised addresses, so a total computed across them overstates by
-  roughly 8%. 245 Park Avenue is one tower and thirteen records, because thirteen
+- PROPERTY RECORDS ARE NOT ONE ROW PER BUILDING. 101,991 published property records
+  cover 94,859 distinct normalised addresses, so a total computed across them overstates
+  by roughly 8%. 245 Park Avenue is one tower and thirteen records, because thirteen
   securitisation trusts each report it. Every row is individually true, which is why the
   distortion is invisible per row. Each record carries address_group_size so you can see
   it: 1 is unique, and above 1 you should deduplicate by address before summing anything.
@@ -400,6 +402,35 @@ event family; there is nothing in it that knows what a family is.
 - Which LIHTC compliance periods and HUD subsidy contracts are expiring, and where?
 - What did this parcel last sell for, to whom, and under which book and page?
 - Who owns, manages or lends against this building?
+
+### Three recipes, as an agent calls them
+
+Each is one tool call, the arguments verbatim, and what came back when this page was
+generated. Paste the call; the numbers are the wire's, not this page's.
+
+**Where is the queue?** Subsidised projects in Ohio with a waiting list of 24 months or more, deepest first.
+
+```json
+{"tool": "search_subsidised_housing", "arguments": {"state": "OH", "min_waiting_months": 24, "limit": 10}}
+```
+
+Returns `matched: 69` and ten rows, the longest at 85 months, each with units available, occupancy, rent, household income and what HUD pays per unit, and `waiting_list_coverage` saying how many projects in the state report a list at all. One annual capture (29,455 projects nationally), stated on every row. A NULL waiting list is an absent disclosure, never an empty queue.
+
+**Which banks are past the CRE guidance line?** FDIC-insured banks in Ohio whose total CRE exceeds 300% of equity, most concentrated first.
+
+```json
+{"tool": "search_bank_cre_exposure", "arguments": {"state": "OH", "above_guidance": true, "limit": 10}}
+```
+
+Returns `matched: 8` with each bank's CRE book against equity and assets, noncurrent and charge-off ratios and its UBPR peer and national percentile ranks. 626 of 4,313 banks nationally are over that line on this measure. The guidance tests total risk based capital and these ratios are on equity, so the row says "screen", not "finding".
+
+**What matures, and against which building?** Securitised and FHA-insured loans on Texas property maturing inside a year, soonest first.
+
+```json
+{"tool": "search_property_events", "arguments": {"event_type": "LOAN_MATURITY_SCHEDULED", "state": "TX", "within_days": 365, "limit": 50}}
+```
+
+Returns 75 events (page with `next_cursor`), each with the building's `dfx_id`. Then, for any row, `get_property_record` with that id returns the loan itself free: current principal, interest rate, original principal, maturity and basis. The priced `debt_maturity_schedule` is the same population as one deduplicated statewide list with the lender name and a completeness figure.
 
 ### One page per question, with the measured coverage on it
 
