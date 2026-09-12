@@ -38,7 +38,7 @@ empty list, so this server refuses unknown arguments with the served vocabulary
 attached, and refuses to sell you a result set that would arrive empty.
 
 > Every number on this page is measured against production, not typed. Last measured
-> **2026-09-11**. Call `dfx_coverage` for the same grid at the moment you read it.
+> **2026-09-12**. Call `dfx_coverage` for the same grid at the moment you read it.
 
 ---
 
@@ -148,7 +148,7 @@ Massachusetts and New York: 95,562 instruments over 118,733 property links.
 
 ### Event coverage, measured
 
-83,479 publishable events across 16 types, written by 9 sources on a published allowlist of 14.
+83,479 publishable events across 16 types, written by 9 sources on a published allowlist of 11.
 
 | Event type | States | Published |
 |---|---|---|
@@ -211,7 +211,7 @@ single place, a loan only has to be filed, so the 19,881 loans on the tape are r
 here while 3,422 maturity events are reachable through the free search.
 
 **How many rows your dollar actually buys.** Of the 19,881 loans, 1,792 mature inside
-the default 548-day window, and they are not evenly spread. Measured 2026-09-11:
+the default 548-day window, and they are not evenly spread. Measured 2026-09-12:
 
 | State | Loans maturing in the next 548 days |
 |---|---|
@@ -463,7 +463,7 @@ Returns 75 events (page with `next_cursor`), each with the building's `dfx_id`. 
 
 ### Served sources
 
-`boston_assessing`, `boston_permits`, `fdic_financials`, `ffiec_ubpr`, `fhfa_pudb_mf`, `gsa_pbs_external_lease`, `hmda_lar`, `hud_fha_multifamily`, `hud_lihtc`, `hud_multifamily_arcgis`, `hud_psh`, `massgis_l3`, `nyc_acris`, `sec_abs_ee`
+`boston_assessing`, `fdic_financials`, `ffiec_ubpr`, `fhfa_pudb_mf`, `hud_fha_multifamily`, `hud_lihtc`, `hud_multifamily_arcgis`, `hud_psh`, `massgis_l3`, `nyc_acris`, `sec_abs_ee`
 
 ### Required attribution
 
