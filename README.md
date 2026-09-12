@@ -1,8 +1,10 @@
-# DFX Real Estate Intelligence: MCP server
+# DFX Intelligence: MCP server
 
-[![DFX Real Estate Intelligence MCP server: quality and maintenance score on Glama](https://glama.ai/mcp/servers/Capital-W-Holdings/us-property-parcel-real-estate-debt/badges/score.svg)](https://glama.ai/mcp/servers/Capital-W-Holdings/us-property-parcel-real-estate-debt)
+[![DFX Intelligence MCP server: quality and maintenance score on Glama](https://glama.ai/mcp/servers/Capital-W-Holdings/us-property-parcel-real-estate-debt/badges/score.svg)](https://glama.ai/mcp/servers/Capital-W-Holdings/us-property-parcel-real-estate-debt)
 
-DFX answers dated questions about two things: **United States commercial and
+**One connection, four domains.** Real estate is the first and deepest; the same server also answers across family offices, independent sponsors and their capital providers, private companies with a transition coming, and venture capital, with cross-domain identity, relationships, events, matching and verification. See [Beyond real estate](#beyond-real-estate-family-offices-independent-sponsors-venture-capital).
+
+The real estate domain answers dated questions about two things: **United States commercial and
 federal-programme real estate debt**, where loan maturities are published across
 52 state codes, compliance expiries across 56 and subsidy expiries across
 54, and **property records**, where 291,914 Massachusetts and New York parcels carry
@@ -29,7 +31,7 @@ the same grid at call time so an agent never has to guess from an empty result.
 **Auth:** none, for everything except one paid tool
 **Registry:** `io.github.Capital-W-Holdings/us-property-parcel-real-estate-debt`
 
-15 tools. 14 are free, unauthenticated and permanent: no key, no signup, no
+39 tools. 38 are free, unauthenticated and permanent: no key, no signup, no
 OAuth. One is priced at **$1.00 per delivered result set** and tells you so before
 it charges you anything.
 
@@ -84,7 +86,7 @@ speak x402, mpp or ap2: it quotes, mints an account and settles through Stripe.
 
 ---
 
-## The 15 tools
+## The 39 tools
 
 | Tool | Takes | Returns | Price |
 |---|---|---|---|
@@ -103,6 +105,30 @@ speak x402, mpp or ap2: it quotes, mints an account and settles through Stripe.
 | `fund_dfx_account` | an account key and an amount | a funding link a person completes once, after which the agent spends inside the balance | free |
 | `dfx_payment_status` | an account key | balance, ceilings and what has been spent | free |
 | `dfx_coverage` | nothing | measured coverage, served sources, object types, known gaps | free |
+| `search_family_offices` | asset_class?, city?, class?, cursor?, has_real_estate?, has_sponsor_relationships?, ... | Family offices as compact cards: class (single, multi, embedded...) with confidence, whether they invest directly, sectors and asset classes on record, check si... | free |
+| `get_family_office` | dfx_id | The full card for one family office: profile, AUM / RAUM / 13F value kept apart with their as-of dates, behaviour, the people who run it with roles, its observe... | free |
+| `search_family_office_investments` | asset_class?, investment_kind?, limit?, office_dfx_id?, sector?, since?, ... | Dated investments family offices have been observed making: target, sector, asset class, structure, control or minority, lead or participant, amounts where disc... | free |
+| `search_independent_sponsors` | city?, kind?, limit?, min_confidence?, query?, sector?, ... | Independent sponsors (deal-by-deal acquirers of lower middle market companies) as compact cards: classification with confidence, mandate summary, principals, ve... | free |
+| `get_independent_sponsor` | dfx_id | The full card for any entity on the sponsor graph: a sponsor (with its computed company matches and announced transactions), a capital provider (with fund size,... | free |
+| `search_sponsor_capital_providers` | limit?, making_new_investments?, min_fund_size_usd?, provider_type?, query?, sbic_licensed?, ... | SBICs, mezzanine and private equity funds, and family offices observed providing capital to independent sponsors: provider type, strategy, fund style, fund size... | free |
+| `search_private_companies` | city?, limit?, max_participants?, min_opportunity?, min_participants?, naics_prefix?, ... | US private companies whose filings (Form 5500 plan history, final filings, ownership changes) show a transition: vertical, plan participants as a size proxy, EB... | free |
+| `search_sponsor_deals` | limit?, query?, since?, sponsor_dfx_id?, state?, target_dfx_id?, ... | Announced acquisitions, recapitalisations and exits by independent sponsors: sponsor, target, dates, enterprise value range where disclosed, structure, parties ... | free |
+| `search_vc_firms` | active_only?, city?, emerging_manager?, limit?, min_investments?, query?, ... | Venture firms as compact cards: stated sectors, stages, geography and check size beside OBSERVED behaviour (investments in the last 6 and 12 months, lead count,... | free |
+| `get_vc_firm` | dfx_id | The full card for any entity on the venture graph: a firm (with recent investments, co-investors and funds), a person (with attributed investments and board sea... | free |
+| `search_vc_investments` | company_dfx_id?, investor_dfx_id?, lead_only?, limit?, partner_dfx_id?, query?, ... | Investor-by-investor participations in rounds: investor, company, fund, the partner attributed (with attribution level), role (lead or participant), new or foll... | free |
+| `search_vc_funds` | lifecycle_state?, limit?, max_vintage?, min_form_d_sold_usd?, min_vintage?, organization_dfx_id?, ... | Funds with every amount under its own name (target, first close, final close, announced size, Form D offering and sold, ADV gross asset value), vintage and basi... | free |
+| `search_entities` | active_only?, asset_class?, city?, cursor?, domain?, entity_type?, ... | One search across family offices, independent sponsors and their capital providers, private companies, venture firms and real estate organisations: by name, or ... | free |
+| `get_entity` | dfx_id, event_limit?, evidence_limit?, include?, relationship_limit? | For any DFX id: the full card, published relationships with sources and dates, recent events, evidence rows (the observation each fact traces to), cross-graph s... | free |
+| `search_people` | current_only?, domain?, investment_responsibility?, limit?, organization_dfx_id?, query?, ... | Investment professionals, principals and family office staff as names with titles, roles, seniority, investment responsibility, organisation and tenure, from pu... | free |
+| `search_relationships` | current_only?, dfx_id, limit?, rel_type? | Every published relationship touching one entity (EMPLOYS, PRINCIPAL_OF, INVESTED_IN, CO_INVESTED_WITH, MANAGES, OWNS, BOARD_MEMBER_OF, VEHICLE_OF, ...), each w... | free |
+| `relationship_path` | from_dfx_id, max_hops?, to_dfx_id | An evidence-backed path between two DFX ids across every graph: each hop is a published relationship with its source, or a SAME_AS identity link by shared CRD/C... | free |
+| `search_events` | dfx_id?, domain?, event_type?, exclude_routine?, limit?, min_significance?, ... | Dated events across family offices, sponsors, venture and real estate: investments announced, vehicles formed, Form D and ADV filings, people joining and leavin... | free |
+| `verify` | claim?, object?, object_dfx_id?, predicate?, subject?, subject_dfx_id?, ... | SUPPORTED, PARTIALLY_SUPPORTED, CONTRADICTED or UNKNOWN for a claim, with the observations | free |
+| `find_capital_for_opportunity` | asset_class?, check_size_usd?, control?, deal_size_usd?, dfx_id?, investor_types?, ... | Ranked investors for a company (dfx_id) or a described opportunity (sector, state, deal size, stage, control): independent sponsors from the computed match plan... | free |
+| `find_opportunities_for_capital` | dfx_id, limit? | For a family office, sponsor, capital provider or venture firm: the opportunities DFX knows that fit its DEMONSTRATED behaviour: computed matches where the grap... | free |
+| `explain_match` | dfx_id_a, dfx_id_b | For an investor and an opportunity (either order): MATCH REASONS, BLOCKERS, SUPPORTING OBSERVATIONS, COMPARABLE HISTORY (the investor's dated investments in the... | free |
+| `why_now` | dfx_id, within_days? | Evidence-backed reasons an entity matters now: recent filings, vehicles formed, deployments, people moves, fundraising, transition signals, loan maturities, eac... | free |
+| `who_should_care` | dfx_id?, event_id?, limit? | Given an entity or an event id: who is likely to care and why | free |
 
 **Start with `what_can_dfx_answer`** if you do not know what to ask for. It says no
 clearly when the answer is no, and it records the ask, so questions DFX cannot answer
@@ -110,7 +136,22 @@ shape what gets built next.
 
 ---
 
-## What is actually in here
+## Beyond real estate: family offices, independent sponsors, venture capital
+
+The same connection answers across three more DFX graphs, with one id scheme (`dfx:fo:`, `dfx:isi:`, `dfx:vc:`, and the real estate ids above), one response contract, and cross-graph identity by shared CRD, CIK or EIN only. A same-name entity on another graph is returned as a candidate, never merged.
+
+**Family offices.** 1,398 offices on the graph (970 candidates, 64 confirmed multi-family, 64 probable single-family, 77 outsourced), 4,236 foundations, 637 offices with 13F positions, 20 with observed direct investments. A candidate is a name, never a class; AUM, RAUM and 13F value are three numbers and are never substituted for one another.
+
+**Independent sponsors.** 1,605 sponsors, 7,332 capital providers, 55,986 private companies with Department of Labor plan-filing history of which 8,179 carry a transition signal, 497,326 computed company-to-sponsor matches with reasons and blockers, 54 announced transactions. A plan-filing signal is one year lagged.
+
+**Venture capital.** 4,968 firms (76 with a fund raising in the last 18 months), 51,233 funds with every fund amount kept apart (2,396 with Form D sold), 26,797 people, 4,430 companies and 21,717 rounds. Stated sectors are populated on 0 firms today, so a sector filter on firms answers NOT_COVERED rather than an empty list; a round is never a check.
+
+**Across all of them:** `search_entities`, `get_entity` (everything on one id: card, relationships, events, evidence, cross-graph links), `search_people`, `search_relationships`, `relationship_path` (how X connects to Y, every hop an evidenced edge), `search_events`, `verify` (SUPPORTED, PARTIALLY_SUPPORTED, CONTRADICTED or UNKNOWN, with the observations), and the economic tools `find_capital_for_opportunity`, `find_opportunities_for_capital`, `explain_match` (reasons and blockers, never a bare score), `why_now` and `who_should_care`.
+
+Contact points are withheld over MCP on every graph. Call `what_can_dfx_answer` with `domain` set to any of `family_office`, `independent_sponsor`, `venture_capital` or `real_estate` for that domain's entity types, event families, rights, freshness and limitations.
+
+---
+## What is actually in here (real estate)
 
 Two populations that barely overlap, and conflating them is the most common way to
 misread this server.

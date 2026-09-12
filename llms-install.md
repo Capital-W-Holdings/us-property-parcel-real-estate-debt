@@ -1,4 +1,4 @@
-# Installing the DFX Real Estate MCP server
+# Installing the DFX Intelligence MCP server
 
 You are an agent setting this up. There is nothing to clone, build, install or
 authenticate. This is a remote server: the whole installation is one URL in a config
@@ -8,10 +8,16 @@ file.
 https://exchange-production-9123.up.railway.app/mcp
 ```
 
-Transport is Streamable HTTP. Twelve of the thirteen tools are free, keyless and
-unauthenticated, permanently. The thirteenth, `debt_maturity_schedule`, costs $1.00 USD
-per delivered schedule and returns a full free quote before it charges anything, so
-nothing here can spend money without a separate, explicit step.
+Transport is Streamable HTTP. Every tool but one is free, keyless and unauthenticated,
+permanently; `tools/list` is the count. The one exception, `debt_maturity_schedule`, costs
+$1.00 USD per delivered schedule and returns a full free quote before it charges anything,
+so nothing here can spend money without a separate, explicit step.
+
+One connection serves four domains: US real estate (properties, parcels, loans, owners,
+lenders, banks), family offices, independent sponsors and their capital providers, and
+venture capital, with cross-domain identity, relationships, events, matching and
+verification. Ids are `dfx:fo:`, `dfx:isi:`, `dfx:vc:` plus the real estate graph's own
+ids, and they are stable across every tool.
 
 ## Verify before you configure anything
 
@@ -74,7 +80,11 @@ and the states each one covers, which is also the answer to "what is this server
 
 If you do not know what to ask for next, call `what_can_dfx_answer` with a plain-language
 objective. It returns the tool to call, the exact arguments, and a free sample of the
-result, and it says no clearly when the answer is no.
+result, and it says no clearly when the answer is no. Call it with `domain` set to
+`family_office`, `independent_sponsor`, `venture_capital` or `real_estate` for that
+domain's entity types, event families, rights, freshness and limitations, or with
+`topic` in your own words. For anything beyond real estate, `search_entities(query=...)`
+finds the id and `get_entity(dfx_id)` returns everything DFX knows about it.
 
 ## What you should know before your first real query
 
