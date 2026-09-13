@@ -40,7 +40,7 @@ empty list, so this server refuses unknown arguments with the served vocabulary
 attached, and refuses to sell you a result set that would arrive empty.
 
 > Every number on this page is measured against production, not typed. Last measured
-> **2026-09-12**. Call `dfx_coverage` for the same grid at the moment you read it.
+> **2026-09-13**. Call `dfx_coverage` for the same grid at the moment you read it.
 
 ---
 
@@ -107,7 +107,7 @@ speak x402, mpp or ap2: it quotes, mints an account and settles through Stripe.
 | `dfx_coverage` | nothing | measured coverage, served sources, object types, known gaps | free |
 | `search_family_offices` | asset_class?, city?, class?, cursor?, has_real_estate?, has_sponsor_relationships?, ... | Family offices as compact cards: class (single, multi, embedded...) with confidence, whether they invest directly, sectors and asset classes on record, check si... | free |
 | `get_family_office` | dfx_id | The full card for one family office: profile, AUM / RAUM / 13F value kept apart with their as-of dates, behaviour, the people who run it with roles, its observe... | free |
-| `search_family_office_investments` | asset_class?, investment_kind?, limit?, office_dfx_id?, sector?, since?, ... | Dated investments family offices have been observed making: target, sector, asset class, structure, control or minority, lead or participant, amounts where disc... | free |
+| `search_family_office_investments` | asset_class?, include_candidates?, investment_kind?, limit?, office_dfx_id?, sector?, ... | Dated investments family offices have been observed making: target, sector, asset class, structure, control or minority, lead or participant, amounts where disc... | free |
 | `search_independent_sponsors` | city?, kind?, limit?, min_confidence?, query?, sector?, ... | Independent sponsors (deal-by-deal acquirers of lower middle market companies) as compact cards: classification with confidence, mandate summary, principals, ve... | free |
 | `get_independent_sponsor` | dfx_id | The full card for any entity on the sponsor graph: a sponsor (with its computed company matches and announced transactions), a capital provider (with fund size,... | free |
 | `search_sponsor_capital_providers` | limit?, making_new_investments?, min_fund_size_usd?, provider_type?, query?, sbic_licensed?, ... | SBICs, mezzanine and private equity funds, and family offices observed providing capital to independent sponsors: provider type, strategy, fund style, fund size... | free |
@@ -119,7 +119,7 @@ speak x402, mpp or ap2: it quotes, mints an account and settles through Stripe.
 | `search_vc_funds` | lifecycle_state?, limit?, max_vintage?, min_form_d_sold_usd?, min_vintage?, organization_dfx_id?, ... | Funds with every amount under its own name (target, first close, final close, announced size, Form D offering and sold, ADV gross asset value), vintage and basi... | free |
 | `search_entities` | active_only?, asset_class?, city?, cursor?, domain?, entity_type?, ... | One search across family offices, independent sponsors and their capital providers, private companies, venture firms and real estate organisations: by name, or ... | free |
 | `get_entity` | dfx_id, event_limit?, evidence_limit?, include?, relationship_limit? | For any DFX id: the full card, published relationships with sources and dates, recent events, evidence rows (the observation each fact traces to), cross-graph s... | free |
-| `search_people` | current_only?, domain?, investment_responsibility?, limit?, organization_dfx_id?, query?, ... | Investment professionals, principals and family office staff as names with titles, roles, seniority, investment responsibility, organisation and tenure, from pu... | free |
+| `search_people` | cross_graph_only?, current_only?, domain?, investment_responsibility?, limit?, organization_dfx_id?, ... | Investment professionals, principals and family office staff as names with titles, roles, seniority, investment responsibility, organisation and tenure, from pu... | free |
 | `search_relationships` | current_only?, dfx_id, limit?, rel_type? | Every published relationship touching one entity (EMPLOYS, PRINCIPAL_OF, INVESTED_IN, CO_INVESTED_WITH, MANAGES, OWNS, BOARD_MEMBER_OF, VEHICLE_OF, ...), each w... | free |
 | `relationship_path` | from_dfx_id, max_hops?, to_dfx_id | An evidence-backed path between two DFX ids across every graph: each hop is a published relationship with its source, or a SAME_AS identity link by shared CRD/C... | free |
 | `search_events` | dfx_id?, domain?, event_type?, exclude_routine?, limit?, min_significance?, ... | Dated events across family offices, sponsors, venture and real estate: investments announced, vehicles formed, Form D and ADV filings, people joining and leavin... | free |
@@ -140,11 +140,11 @@ shape what gets built next.
 
 The same connection answers across three more DFX graphs, with one id scheme (`dfx:fo:`, `dfx:isi:`, `dfx:vc:`, and the real estate ids above), one response contract, and cross-graph identity by shared CRD, CIK or EIN only. A same-name entity on another graph is returned as a candidate, never merged.
 
-**Family offices.** 1,398 offices on the graph (970 candidates, 64 confirmed multi-family, 64 probable single-family, 77 outsourced), 4,236 foundations, 637 offices with 13F positions, 20 with observed direct investments. A candidate is a name, never a class; AUM, RAUM and 13F value are three numbers and are never substituted for one another.
+**Family offices.** 1,560 offices on the graph (835 candidates, 81 confirmed multi-family, 185 probable single-family, 94 outsourced), 4,236 foundations, 637 offices with 13F positions, 32 with observed direct investments. A candidate is a name, never a class; AUM, RAUM and 13F value are three numbers and are never substituted for one another.
 
-**Independent sponsors.** 1,605 sponsors, 7,332 capital providers, 55,986 private companies with Department of Labor plan-filing history of which 8,179 carry a transition signal, 497,326 computed company-to-sponsor matches with reasons and blockers, 54 announced transactions. A plan-filing signal is one year lagged.
+**Independent sponsors.** 3,974 sponsors, 9,966 capital providers, 97,134 private companies with Department of Labor plan-filing history of which 14,881 carry a transition signal, 525,730 computed company-to-sponsor matches with reasons and blockers, 283 announced transactions. A plan-filing signal is one year lagged.
 
-**Venture capital.** 4,968 firms (76 with a fund raising in the last 18 months), 51,233 funds with every fund amount kept apart (2,396 with Form D sold), 26,797 people, 4,430 companies and 21,717 rounds. Stated sectors are populated on 0 firms today, so a sector filter on firms answers NOT_COVERED rather than an empty list; a round is never a check.
+**Venture capital.** None firms (None with a fund raising in the last 18 months), 68,698 funds with every fund amount kept apart (19,393 with Form D sold), 85,733 people, 26,465 companies and 21,801 rounds. Stated sectors are populated on None firms today, so a sector filter on firms answers NOT_COVERED rather than an empty list; a round is never a check.
 
 **Across all of them:** `search_entities`, `get_entity` (everything on one id: card, relationships, events, evidence, cross-graph links), `search_people`, `search_relationships`, `relationship_path` (how X connects to Y, every hop an evidenced edge), `search_events`, `verify` (SUPPORTED, PARTIALLY_SUPPORTED, CONTRADICTED or UNKNOWN, with the observations), and the economic tools `find_capital_for_opportunity`, `find_opportunities_for_capital`, `explain_match` (reasons and blockers, never a bare score), `why_now` and `who_should_care`.
 
@@ -189,7 +189,7 @@ Massachusetts and New York: 95,562 instruments over 118,733 property links.
 
 ### Event coverage, measured
 
-83,479 publishable events across 16 types, written by 9 sources on a published allowlist of 11.
+83,479 publishable events across 16 types, written by 9 sources on a published allowlist of 9.
 
 | Event type | States | Published |
 |---|---|---|
@@ -252,7 +252,7 @@ single place, a loan only has to be filed, so the 19,881 loans on the tape are r
 here while 3,422 maturity events are reachable through the free search.
 
 **How many rows your dollar actually buys.** Of the 19,881 loans, 1,792 mature inside
-the default 548-day window, and they are not evenly spread. Measured 2026-09-12:
+the default 548-day window, and they are not evenly spread. Measured 2026-09-13:
 
 | State | Loans maturing in the next 548 days |
 |---|---|
@@ -504,13 +504,8 @@ Returns 75 events (page with `next_cursor`), each with the building's `dfx_id`. 
 
 ### Served sources
 
-`boston_assessing`, `fdic_financials`, `ffiec_ubpr`, `fhfa_pudb_mf`, `hud_fha_multifamily`, `hud_lihtc`, `hud_multifamily_arcgis`, `hud_psh`, `massgis_l3`, `nyc_acris`, `sec_abs_ee`
+`boston_assessing`, `ffiec_ubpr`, `fhfa_pudb_mf`, `hud_fha_multifamily`, `hud_multifamily_arcgis`, `hud_psh`, `massgis_l3`, `nyc_acris`, `sec_abs_ee`
 
-### Required attribution
-
-Some served sources are published under terms that ask to be named. Carry these notices with any republished row:
-
-- **`nyc_acris`**: Source: NYC Department of Finance ACRIS, via NYC Open Data. Include the dataset version and any modifications DFX has made.
 
 ## Terms
 
