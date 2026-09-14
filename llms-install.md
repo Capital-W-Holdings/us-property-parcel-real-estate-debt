@@ -8,10 +8,8 @@ file.
 https://exchange-production-9123.up.railway.app/mcp
 ```
 
-Transport is Streamable HTTP. Every tool but one is free, keyless and unauthenticated,
-permanently; `tools/list` is the count. The one exception, `debt_maturity_schedule`, costs
-$1.00 USD per delivered schedule and returns a full free quote before it charges anything,
-so nothing here can spend money without a separate, explicit step.
+Transport is Streamable HTTP. Every tool is free, keyless, read-only and unauthenticated;
+`tools/list` is the count. Nothing here can spend money.
 
 One connection serves four domains: US real estate (properties, parcels, loans, owners,
 lenders, banks), family offices, independent sponsors and their capital providers, and

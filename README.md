@@ -28,26 +28,24 @@ the same grid at call time so an agent never has to guess from an empty result.
 
 **Endpoint:** `https://exchange-production-9123.up.railway.app/mcp`
 **Transport:** Streamable HTTP
-**Auth:** none, for everything except one paid tool
+**Auth:** none
 **Registry:** `io.github.Capital-W-Holdings/us-property-parcel-real-estate-debt`
 
-39 tools. 38 are free, unauthenticated and permanent: no key, no signup, no
-OAuth. One is priced at **$1.00 per delivered result set** and tells you so before
-it charges you anything.
+36 tools, all free, unauthenticated and read-only: no key, no signup, no OAuth.
 
 A tool that answers "no" clearly is worth more to an agent than one that answers an
 empty list, so this server refuses unknown arguments with the served vocabulary
-attached, and refuses to sell you a result set that would arrive empty.
+attached.
 
 > Every number on this page is measured against production, not typed. Last measured
-> **2026-09-13**. Call `dfx_coverage` for the same grid at the moment you read it.
+> **2026-09-14**. Call `dfx_coverage` for the same grid at the moment you read it.
 
 ---
 
 ## Read the schemas before you call anything
 
-A plain `GET` on the endpoint returns the full tool list, the coverage numbers, the
-price and a worked example. No handshake, no session, no `initialize`.
+A plain `GET` on the endpoint returns the full tool list, the coverage numbers and a
+worked example. No handshake, no session, no `initialize`.
 
 ```bash
 curl -s https://exchange-production-9123.up.railway.app/mcp
@@ -81,12 +79,11 @@ not have to guess and does not have to be told:
 | [`/openapi.json`](https://exchange-production-9123.up.railway.app/openapi.json) | the same capabilities over plain HTTP |
 | [`/robots.txt`](https://exchange-production-9123.up.railway.app/robots.txt) | crawlers and agents are welcome, and it says so |
 
-`agents.txt` names no payment protocol. This server has a priced tool and does not
-speak x402, mpp or ap2: it quotes, mints an account and settles through Stripe.
+`agents.txt` names no payment protocol because nothing on this server is priced.
 
 ---
 
-## The 39 tools
+## The 36 tools
 
 | Tool | Takes | Returns | Price |
 |---|---|---|---|
@@ -100,10 +97,7 @@ speak x402, mpp or ap2: it quotes, mints an account and settles through Stripe.
 | `search_parcels` | filters | parcels by attribute rather than by an address you already knew | free |
 | `what_can_dfx_answer` | an objective, in natural language | whether DFX can help, which tool to call, the arguments, and a free sample | free |
 | `changes_since` | an opaque cursor | what DFX has **learned** since your cursor | free |
-| `debt_maturity_schedule` | state, within_days?, limit? | the loan tape: principal, lender, instrument, maturity, secured property | **$1.00** |
-| `open_dfx_account` | an email address | an account key for the one paid tool, issued in the response | free |
-| `fund_dfx_account` | an account key and an amount | a funding link a person completes once, after which the agent spends inside the balance | free |
-| `dfx_payment_status` | an account key | balance, ceilings and what has been spent | free |
+| `debt_maturity_schedule` | state, within_days?, limit? | the loan tape: principal, lender, instrument, maturity, secured property | free |
 | `dfx_coverage` | nothing | measured coverage, served sources, object types, known gaps | free |
 | `search_family_offices` | asset_class?, city?, class?, cursor?, has_real_estate?, has_sponsor_relationships?, ... | Family offices as compact cards: class (single, multi, embedded...) with confidence, whether they invest directly, sectors and asset classes on record, check si... | free |
 | `get_family_office` | dfx_id | The full card for one family office: profile, AUM / RAUM / 13F value kept apart with their as-of dates, behaviour, the people who run it with roles, its observe... | free |
@@ -140,11 +134,11 @@ shape what gets built next.
 
 The same connection answers across three more DFX graphs, with one id scheme (`dfx:fo:`, `dfx:isi:`, `dfx:vc:`, and the real estate ids above), one response contract, and cross-graph identity by shared CRD, CIK or EIN only. A same-name entity on another graph is returned as a candidate, never merged.
 
-**Family offices.** 1,560 offices on the graph (835 candidates, 81 confirmed multi-family, 185 probable single-family, 94 outsourced), 4,236 foundations, 637 offices with 13F positions, 32 with observed direct investments. A candidate is a name, never a class; AUM, RAUM and 13F value are three numbers and are never substituted for one another.
+**Family offices.** 1,511 offices on the graph (718 candidates, 81 confirmed multi-family, 43 probable single-family, 107 outsourced), 4,236 foundations, 637 offices with 13F positions, 38 with observed direct investments. A candidate is a name, never a class; AUM, RAUM and 13F value are three numbers and are never substituted for one another.
 
-**Independent sponsors.** 3,974 sponsors, 9,966 capital providers, 97,134 private companies with Department of Labor plan-filing history of which 14,881 carry a transition signal, 525,730 computed company-to-sponsor matches with reasons and blockers, 283 announced transactions. A plan-filing signal is one year lagged.
+**Independent sponsors.** 3,962 sponsors, 9,878 capital providers, 97,262 private companies with Department of Labor plan-filing history of which 15,009 carry a transition signal, 38,543 computed company-to-sponsor matches with reasons and blockers, 977 announced transactions. A plan-filing signal is one year lagged.
 
-**Venture capital.** None firms (None with a fund raising in the last 18 months), 68,698 funds with every fund amount kept apart (19,393 with Form D sold), 85,733 people, 26,465 companies and 21,801 rounds. Stated sectors are populated on None firms today, so a sector filter on firms answers NOT_COVERED rather than an empty list; a round is never a check.
+**Venture capital.** None firms (None with a fund raising in the last 18 months), 69,027 funds with every fund amount kept apart (19,393 with Form D sold), 90,270 people, 32,590 companies and 23,244 rounds. Stated sectors are populated on None firms today, so a sector filter on firms answers NOT_COVERED rather than an empty list; a round is never a check.
 
 **Across all of them:** `search_entities`, `get_entity` (everything on one id: card, relationships, events, evidence, cross-graph links), `search_people`, `search_relationships`, `relationship_path` (how X connects to Y, every hop an evidenced edge), `search_events`, `verify` (SUPPORTED, PARTIALLY_SUPPORTED, CONTRADICTED or UNKNOWN, with the observations), and the economic tools `find_capital_for_opportunity`, `find_opportunities_for_capital`, `explain_match` (reasons and blockers, never a bare score), `why_now` and `who_should_care`.
 
@@ -221,38 +215,33 @@ cannot reach it.
 
 ---
 
-## The one paid tool: `debt_maturity_schedule`, $1.00
+## The loan tape: `debt_maturity_schedule`
 
-Everything above is free and stays free. This one is priced, and the price is printed
-in the tool description, in the tool `_meta`, and in the quote. You are never asked to
-negotiate, there is no sales call, and there is no field through which a caller can
-propose a price: the amount is read off the quote, server side.
-
-**What you get.** For one US state and one forward window, up to 200 loans, one row
-per loan, ordered by maturity date:
+Free, like everything else on this server. For one US state and one forward window, up
+to 200 loans per call, one row per loan, ordered by maturity date:
 
 - `maturity_date` and `maturity_basis`
-- `original_principal_usd`, `origination_date`, `term_months`
+- `original_principal_usd`, `current_principal_usd`, `interest_rate_pct`, `origination_date`, `term_months`
 - `instrument_type`
 - the lender's canonical name and DFX id where resolved
 - the secured property: DFX id, street address, city, state, postal code, unit count, property type
 - the `source_key` for that row
 
-**Why it might be worth a dollar.** 19,881 loans carry a maturity date and **19,881 of
+**Why the dates can be trusted.** 19,881 loans carry a maturity date and **19,881 of
 19,881 carry `maturity_basis = 'confirmed'`.** Not one is estimated, inferred from a
 term length, or carried forward from a stale reading. Every date was filed with the SEC
 by a loan servicer or recorded by HUD, and then resolved to a specific building.
 
-The free `search_property_events` tool returns the **event**: a date, a headline, an
-address. The paid one returns the **loan**: the principal, the lender, the instrument,
-deduplicated to one row per loan, up to 200 rows instead of 50, with the population
-stated so you can tell a complete answer from a truncated one. The two populations are
-different sizes on purpose and both numbers are true: an event has to be promoted to a
-single place, a loan only has to be filed, so the 19,881 loans on the tape are reached
-here while 3,422 maturity events are reachable through the free search.
+`search_property_events` returns the **event**: a date, a headline, an address. The loan
+tape returns the **loan**: the principal, the lender, the instrument, deduplicated to one
+row per loan, up to 200 rows instead of 50, with the population stated so you can tell a
+complete answer from a truncated one. The two populations are different sizes on purpose
+and both numbers are true: an event has to be promoted to a single place, a loan only has
+to be filed, so the 19,881 loans on the tape are reached here while
+3,422 maturity events are reachable through the event search.
 
-**How many rows your dollar actually buys.** Of the 19,881 loans, 1,792 mature inside
-the default 548-day window, and they are not evenly spread. Measured 2026-09-13:
+**How the loans spread.** Of the 19,881 loans, 1,792 mature inside
+the default 548-day window, and they are not evenly spread. Measured 2026-09-14:
 
 | State | Loans maturing in the next 548 days |
 |---|---|
@@ -280,16 +269,11 @@ the default 548-day window, and they are not evenly spread. Measured 2026-09-13:
 | MO | 20 |
 
 26 further states hold between 1 and 18 loans in that window; Montana and Wyoming hold
-1. Widen `within_days` to reach further out; the price does not move with the row count
-or the window.
+1. Widen `within_days` to reach further out; each call returns up to 200 loans.
 
 123 of those 1,792 carry no single state: a loan secured by several
 buildings has no property anchor, so a state filter cannot reach it. Those are reached
-through the free `get_property_record`.
-
-Ask for a state and window you are unsure about with the free `search_property_events`
-first: it returns the maturity **events** for the same filter at no cost, so you can
-see whether the market is there before you spend anything.
+through `get_property_record`.
 
 **What it does not cover, stated plainly.** These are the gaps the server itself
 reports through `dfx_coverage`, reprinted here so you do not have to call it to find
@@ -336,53 +320,6 @@ them:
   YORK is a recorder extract: five boroughs, both parties named, every instrument dated,
   so repeat sales and hold periods ARE derivable, but only for deeds at or above
   $10,000,000. Neither one is a national sale tape and DFX does not have one.
-
-### How payment works
-
-Two round trips, on purpose.
-
-```
-1. call debt_maturity_schedule WITHOUT `authorize`
-   -> PAYMENT_REQUIRED. The price, the quote id, what arrives, how many rows
-      your filter holds, the known limits, and the free alternative.
-      Nothing is charged for a quote.
-
-2. call it again WITH `authorize: {quote_id, max_price_usd}` and your account
-   key in the X-DFX-Account header
-   -> charged once, and served in the same response, with a receipt.
-```
-
-`max_price_usd` is **your** ceiling and it is checked before ours. If the price ever
-moved above it you are refused rather than charged. It can lower what you pay and can
-never raise it.
-
-A quote settles exactly once: replaying an authorized call returns `ALREADY_SETTLED`
-rather than charging twice. If delivery fails after the debit, the settlement is
-reversed in full in the same request and your balance is restored. You are never
-charged for a result you did not receive.
-
-The account is a **funded balance**, not a card in the request path. A person funds it
-once; your agent then spends inside it with per-call, daily and account ceilings and no
-further human step. An agent holding a payment instrument can create an obligation; an
-agent holding a balance cannot. `open_dfx_account`, `fund_dfx_account` and
-`dfx_payment_status` are themselves free tools on this server, so opening an account and
-reading its balance never leave MCP and never wait on a person.
-
-
-**Where the money path actually stands, in the tools' own words:**
-
-- **`open_dfx_account`**: THE ACCOUNT STARTS AT $0.00 AND CANNOT BUY ANYTHING. DFX mints
-  identity and never credit: a balance moves only when Stripe confirms a payment and DFX
-  re-reads that payment from Stripe. There is no argument anywhere on this server through
-  which you can propose a balance.
-
-- **`fund_dfx_account`**: A CARD MUST STILL BE AUTHORIZED. That is the card network's
-  boundary and not a DFX design choice: show the URL and the price to your human, or
-  present your own payment credential to Stripe. Everything either side of that step is
-  callable by a machine.
-
-- **`fund_dfx_account`**: This build collects Stripe TEST payments only. No real money
-  moves.
 
 ---
 
@@ -474,7 +411,7 @@ Returns `matched: 8` with each bank's CRE book against equity and assets, noncur
 {"tool": "search_property_events", "arguments": {"event_type": "LOAN_MATURITY_SCHEDULED", "state": "TX", "within_days": 365, "limit": 50}}
 ```
 
-Returns 75 events (page with `next_cursor`), each with the building's `dfx_id`. Then, for any row, `get_property_record` with that id returns the loan itself free: current principal, interest rate, original principal, maturity and basis. The priced `debt_maturity_schedule` is the same population as one deduplicated statewide list with the lender name and a completeness figure.
+Returns 75 events (page with `next_cursor`), each with the building's `dfx_id`. Then, for any row, `get_property_record` with that id returns the loan itself free: current principal, interest rate, original principal, maturity and basis. `debt_maturity_schedule` is the same population as one deduplicated statewide list with the lender name and a completeness figure.
 
 ### One page per question, with the measured coverage on it
 
