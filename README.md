@@ -31,14 +31,14 @@ the same grid at call time so an agent never has to guess from an empty result.
 **Auth:** none
 **Registry:** `io.github.Capital-W-Holdings/us-property-parcel-real-estate-debt`
 
-36 tools, all free, unauthenticated and read-only: no key, no signup, no OAuth.
+47 tools, all free, unauthenticated and read-only: no key, no signup, no OAuth.
 
 A tool that answers "no" clearly is worth more to an agent than one that answers an
 empty list, so this server refuses unknown arguments with the served vocabulary
 attached.
 
 > Every number on this page is measured against production, not typed. Last measured
-> **2026-09-14**. Call `dfx_coverage` for the same grid at the moment you read it.
+> **2026-09-15**. Call `dfx_coverage` for the same grid at the moment you read it.
 
 ---
 
@@ -83,7 +83,7 @@ not have to guess and does not have to be told:
 
 ---
 
-## The 36 tools
+## The 47 tools
 
 | Tool | Takes | Returns | Price |
 |---|---|---|---|
@@ -102,23 +102,34 @@ not have to guess and does not have to be told:
 | `search_family_offices` | asset_class?, city?, class?, cursor?, has_real_estate?, has_sponsor_relationships?, ... | Family offices as compact cards: class (single, multi, embedded...) with confidence, whether they invest directly, sectors and asset classes on record, check si... | free |
 | `get_family_office` | dfx_id | The full card for one family office: profile, AUM / RAUM / 13F value kept apart with their as-of dates, behaviour, the people who run it with roles, its observe... | free |
 | `search_family_office_investments` | asset_class?, include_candidates?, investment_kind?, limit?, office_dfx_id?, sector?, ... | Dated investments family offices have been observed making: target, sector, asset class, structure, control or minority, lead or participant, amounts where disc... | free |
-| `search_independent_sponsors` | city?, kind?, limit?, min_confidence?, query?, sector?, ... | Independent sponsors (deal-by-deal acquirers of lower middle market companies) as compact cards: classification with confidence, mandate summary, principals, ve... | free |
-| `get_independent_sponsor` | dfx_id | The full card for any entity on the sponsor graph: a sponsor (with its computed company matches and announced transactions), a capital provider (with fund size,... | free |
+| `search_independent_sponsors` | city?, include_unverified?, kind?, limit?, min_confidence?, query?, ... | Verified independent sponsor firms (deal-by-deal acquirers of lower middle market companies) as compact cards: verification status, classification, mandate summ... | free |
+| `get_independent_sponsor` | dfx_id | The full card for any entity on the sponsor graph: a sponsor (with its verification status, the companies resembling its observed deals as counted facts and rea... | free |
 | `search_sponsor_capital_providers` | limit?, making_new_investments?, min_fund_size_usd?, provider_type?, query?, sbic_licensed?, ... | SBICs, mezzanine and private equity funds, and family offices observed providing capital to independent sponsors: provider type, strategy, fund style, fund size... | free |
 | `search_private_companies` | city?, limit?, max_participants?, min_opportunity?, min_participants?, naics_prefix?, ... | US private companies whose filings (Form 5500 plan history, final filings, ownership changes) show a transition: vertical, plan participants as a size proxy, EB... | free |
 | `search_sponsor_deals` | limit?, query?, since?, sponsor_dfx_id?, state?, target_dfx_id?, ... | Announced acquisitions, recapitalisations and exits by independent sponsors: sponsor, target, dates, enterprise value range where disclosed, structure, parties ... | free |
+| `search_pending_ownership_changes` | changed_since?, limit?, query?, state?, tag?, view? | OFFICIAL state records that a skilled nursing facility's ownership, control or operator is changing, before the change takes effect (Kentucky, New York, Rhode I... | free |
 | `search_vc_firms` | active_only?, city?, emerging_manager?, limit?, min_investments?, query?, ... | Venture firms as compact cards: stated sectors, stages, geography and check size beside OBSERVED behaviour (investments in the last 6 and 12 months, lead count,... | free |
 | `get_vc_firm` | dfx_id | The full card for any entity on the venture graph: a firm (with recent investments, co-investors and funds), a person (with attributed investments and board sea... | free |
 | `search_vc_investments` | company_dfx_id?, investor_dfx_id?, lead_only?, limit?, partner_dfx_id?, query?, ... | Investor-by-investor participations in rounds: investor, company, fund, the partner attributed (with attribution level), role (lead or participant), new or foll... | free |
 | `search_vc_funds` | lifecycle_state?, limit?, max_vintage?, min_form_d_sold_usd?, min_vintage?, organization_dfx_id?, ... | Funds with every amount under its own name (target, first close, final close, announced size, Form D offering and sold, ADV gross asset value), vintage and basi... | free |
-| `search_entities` | active_only?, asset_class?, city?, cursor?, domain?, entity_type?, ... | One search across family offices, independent sponsors and their capital providers, private companies, venture firms and real estate organisations: by name, or ... | free |
+| `search_pe_firms` | class?, class_state?, cursor?, limit?, min_transactions_36m?, query?, ... | Private equity firms (management companies and advisers) as compact cards: the classifier's class with its state, confidence and basis; size band with the evide... | free |
+| `get_pe_firm` | dfx_id | The full card for a private equity firm: identity (website, HQ, ADV filing dates), classification with basis and the size band's definition and evidence, classi... | free |
+| `search_pe_funds` | adv_fund_type?, cursor?, lifecycle_state?, limit?, max_vintage?, min_adv_gav_usd?, ... | Funds on the private equity graph with every amount under its own name and beside its basis: target, first close, final close, announced size, Form D offering a... | free |
+| `get_pe_fund` | dfx_id | One fund: manager, vintage and basis, every amount kept apart with its basis (adv_gross_asset_value is reported gross assets, not fund size or dry powder), the ... | free |
+| `search_pe_transactions` | add_on_only?, control_status?, firm_dfx_id?, limit?, platform_dfx_id?, query?, ... | Acquisitions, add-ons, recapitalisations, carve-outs, secondary sales and exits on the private equity graph: type, status, announced and closed dates, target wi... | free |
+| `search_pe_platforms` | limit?, min_add_ons_24m?, owner_dfx_id?, query?, sector?, sort?, ... | Companies that act as a platform (a sponsor's platform investment, or a company that has made add-ons): industry, add-on counts (total and last 24 months) and l... | free |
+| `find_pe_buyers_for_company` | dfx_id, limit? | Computed buyer_for_company matches from the private equity matcher for one company (a dfx:pe:, dfx:isi: or dfx:vc: company id): each firm with the matcher's rea... | free |
+| `find_pe_companies_for_buyer` | dfx_id, limit? | Computed company_for_buyer matches for one private equity firm (dfx:pe: id): each company (on the private equity, sponsor or venture graph, with its dfx id) wit... | free |
+| `find_pe_addons_for_platform` | dfx_id, limit? | Computed addon_for_platform matches for one platform (a dfx:pe: company id from search_pe_platforms): each candidate company with the matcher's reasons, blocker... | free |
+| `search_entities` | active_only?, asset_class?, city?, cursor?, domain?, entity_type?, ... | One search across family offices, independent sponsors and their capital providers, private companies, venture firms, private equity firms and funds, and real e... | free |
+| `resolve_name` | domain?, entity_type?, limit?, name | Resolve a firm, fund, person or company name to canonical dfx ids from the Data Factory's index of every published name and alias (former names, dbas, legal nam... | free |
 | `get_entity` | dfx_id, event_limit?, evidence_limit?, include?, relationship_limit? | For any DFX id: the full card, published relationships with sources and dates, recent events, evidence rows (the observation each fact traces to), cross-graph s... | free |
 | `search_people` | cross_graph_only?, current_only?, domain?, investment_responsibility?, limit?, organization_dfx_id?, ... | Investment professionals, principals and family office staff as names with titles, roles, seniority, investment responsibility, organisation and tenure, from pu... | free |
 | `search_relationships` | current_only?, dfx_id, limit?, rel_type? | Every published relationship touching one entity (EMPLOYS, PRINCIPAL_OF, INVESTED_IN, CO_INVESTED_WITH, MANAGES, OWNS, BOARD_MEMBER_OF, VEHICLE_OF, ...), each w... | free |
 | `relationship_path` | from_dfx_id, max_hops?, to_dfx_id | An evidence-backed path between two DFX ids across every graph: each hop is a published relationship with its source, or a SAME_AS identity link by shared CRD/C... | free |
-| `search_events` | dfx_id?, domain?, event_type?, exclude_routine?, limit?, min_significance?, ... | Dated events across family offices, sponsors, venture and real estate: investments announced, vehicles formed, Form D and ADV filings, people joining and leavin... | free |
+| `search_events` | dfx_id?, domain?, event_type?, exclude_routine?, limit?, min_significance?, ... | Dated events across family offices, sponsors, venture, private equity and real estate: investments announced, vehicles formed, Form D and ADV filings, people jo... | free |
 | `verify` | claim?, object?, object_dfx_id?, predicate?, subject?, subject_dfx_id?, ... | SUPPORTED, PARTIALLY_SUPPORTED, CONTRADICTED or UNKNOWN for a claim, with the observations | free |
-| `find_capital_for_opportunity` | asset_class?, check_size_usd?, control?, deal_size_usd?, dfx_id?, investor_types?, ... | Ranked investors for a company (dfx_id) or a described opportunity (sector, state, deal size, stage, control): independent sponsors from the computed match plan... | free |
+| `find_capital_for_opportunity` | asset_class?, check_size_usd?, control?, deal_size_usd?, dfx_id?, investor_types?, ... | Investors for a company (dfx_id) or a described opportunity (sector, state, deal size, stage, control): verified independent sponsors with observed acquisitions... | free |
 | `find_opportunities_for_capital` | dfx_id, limit? | For a family office, sponsor, capital provider or venture firm: the opportunities DFX knows that fit its DEMONSTRATED behaviour: computed matches where the grap... | free |
 | `explain_match` | dfx_id_a, dfx_id_b | For an investor and an opportunity (either order): MATCH REASONS, BLOCKERS, SUPPORTING OBSERVATIONS, COMPARABLE HISTORY (the investor's dated investments in the... | free |
 | `why_now` | dfx_id, within_days? | Evidence-backed reasons an entity matters now: recent filings, vehicles formed, deployments, people moves, fundraising, transition signals, loan maturities, eac... | free |
@@ -134,11 +145,11 @@ shape what gets built next.
 
 The same connection answers across three more DFX graphs, with one id scheme (`dfx:fo:`, `dfx:isi:`, `dfx:vc:`, and the real estate ids above), one response contract, and cross-graph identity by shared CRD, CIK or EIN only. A same-name entity on another graph is returned as a candidate, never merged.
 
-**Family offices.** 1,511 offices on the graph (718 candidates, 81 confirmed multi-family, 43 probable single-family, 107 outsourced), 4,236 foundations, 637 offices with 13F positions, 38 with observed direct investments. A candidate is a name, never a class; AUM, RAUM and 13F value are three numbers and are never substituted for one another.
+**Family offices.** 2,328 offices on the graph (849 candidates, 124 confirmed multi-family, 353 probable single-family, 116 outsourced), 4,236 foundations, 637 offices with 13F positions, 120 with observed direct investments. A candidate is a name, never a class; AUM, RAUM and 13F value are three numbers and are never substituted for one another.
 
-**Independent sponsors.** 3,962 sponsors, 9,878 capital providers, 97,262 private companies with Department of Labor plan-filing history of which 15,009 carry a transition signal, 38,543 computed company-to-sponsor matches with reasons and blockers, 977 announced transactions. A plan-filing signal is one year lagged.
+**Independent sponsors.** 3,677 sponsors, 9,888 capital providers, 97,287 private companies with Department of Labor plan-filing history of which 15,015 carry a transition signal, 27,899 computed company-to-sponsor matches with reasons and blockers, 1,285 announced transactions. A plan-filing signal is one year lagged.
 
-**Venture capital.** None firms (None with a fund raising in the last 18 months), 69,027 funds with every fund amount kept apart (19,393 with Form D sold), 90,270 people, 32,590 companies and 23,244 rounds. Stated sectors are populated on None firms today, so a sector filter on firms answers NOT_COVERED rather than an empty list; a round is never a check.
+**Venture capital.** None firms (None with a fund raising in the last 18 months), 71,055 funds with every fund amount kept apart (48,497 with Form D sold), 99,872 people, 38,676 companies and 23,199 rounds. Stated sectors are populated on None firms today, so a sector filter on firms answers NOT_COVERED rather than an empty list; a round is never a check.
 
 **Across all of them:** `search_entities`, `get_entity` (everything on one id: card, relationships, events, evidence, cross-graph links), `search_people`, `search_relationships`, `relationship_path` (how X connects to Y, every hop an evidenced edge), `search_events`, `verify` (SUPPORTED, PARTIALLY_SUPPORTED, CONTRADICTED or UNKNOWN, with the observations), and the economic tools `find_capital_for_opportunity`, `find_opportunities_for_capital`, `explain_match` (reasons and blockers, never a bare score), `why_now` and `who_should_care`.
 
@@ -183,7 +194,7 @@ Massachusetts and New York: 95,562 instruments over 118,733 property links.
 
 ### Event coverage, measured
 
-83,479 publishable events across 16 types, written by 9 sources on a published allowlist of 9.
+83,443 publishable events across 16 types, written by 9 sources on a published allowlist of 9.
 
 | Event type | States | Published |
 |---|---|---|
@@ -193,13 +204,13 @@ Massachusetts and New York: 95,562 instruments over 118,733 property links.
 | `PERMIT_ISSUED` | 1 | 4,203 |
 | `LEASE_EXPIRING` | 55 | 3,966 |
 | `PORTFOLIO_EXPANDED` | 53 | 3,528 |
-| `LOAN_MATURITY_SCHEDULED` | 52 | 3,422 |
+| `LOAN_MATURITY_SCHEDULED` | 52 | 3,395 |
 | `PORTFOLIO_CONTRACTED` | 54 | 3,181 |
 | `CERTIFICATE_OF_OCCUPANCY` | 1 | 2,768 |
 | `DEMOLITION_FILED` | 1 | 881 |
 | `USE_CONVERSION_PERMITTED` | 1 | 849 |
-| `DISTRESS_FLAG_RAISED` | 26 | 167 |
-| `FORECLOSURE_EVENT` | 22 | 128 |
+| `DISTRESS_FLAG_RAISED` | 26 | 163 |
+| `FORECLOSURE_EVENT` | 21 | 123 |
 | `PERMIT_STATUS_CHANGED` | 0 | 13 |
 | `LOAN_MODIFIED` | 5 | 12 |
 | `BANKRUPTCY_EVENT` | 4 | 4 |
@@ -208,7 +219,7 @@ Massachusetts and New York: 95,562 instruments over 118,733 property links.
 `USE_CONVERSION_PERMITTED` are Massachusetts only. `COMPLIANCE_PERIOD_ENDING`,
 `LEASE_EXPIRING`, `LOAN_MATURITY_SCHEDULED`, `PORTFOLIO_CONTRACTED`,
 `PORTFOLIO_EXPANDED`, `SUBSIDY_CONTRACT_EXPIRING` are national. Multi-state, with the
-number of states each reaches: `DISTRESS_FLAG_RAISED` (26), `FORECLOSURE_EVENT` (22),
+number of states each reaches: `DISTRESS_FLAG_RAISED` (26), `FORECLOSURE_EVENT` (21),
 `LOAN_MODIFIED` (5), `BANKRUPTCY_EVENT` (4), `PROPERTY_SOLD` (2).
 `PERMIT_STATUS_CHANGED` carries rows that resolve to no state at all, so a state filter
 cannot reach it.
@@ -227,8 +238,8 @@ to 200 loans per call, one row per loan, ordered by maturity date:
 - the secured property: DFX id, street address, city, state, postal code, unit count, property type
 - the `source_key` for that row
 
-**Why the dates can be trusted.** 19,881 loans carry a maturity date and **19,881 of
-19,881 carry `maturity_basis = 'confirmed'`.** Not one is estimated, inferred from a
+**Why the dates can be trusted.** 19,821 loans carry a maturity date and **19,821 of
+19,821 carry `maturity_basis = 'confirmed'`.** Not one is estimated, inferred from a
 term length, or carried forward from a stale reading. Every date was filed with the SEC
 by a loan servicer or recorded by HUD, and then resolved to a specific building.
 
@@ -237,30 +248,30 @@ tape returns the **loan**: the principal, the lender, the instrument, deduplicat
 row per loan, up to 200 rows instead of 50, with the population stated so you can tell a
 complete answer from a truncated one. The two populations are different sizes on purpose
 and both numbers are true: an event has to be promoted to a single place, a loan only has
-to be filed, so the 19,881 loans on the tape are reached here while
-3,422 maturity events are reachable through the event search.
+to be filed, so the 19,821 loans on the tape are reached here while
+3,395 maturity events are reachable through the event search.
 
-**How the loans spread.** Of the 19,881 loans, 1,792 mature inside
-the default 548-day window, and they are not evenly spread. Measured 2026-09-14:
+**How the loans spread.** Of the 19,821 loans, 1,765 mature inside
+the default 548-day window, and they are not evenly spread. Measured 2026-09-15:
 
 | State | Loans maturing in the next 548 days |
 |---|---|
-| CA | 334 |
-| NY | 197 |
-| TX | 123 |
-| FL | 101 |
-| OH | 68 |
-| GA | 62 |
-| IL | 57 |
+| CA | 333 |
+| NY | 196 |
+| TX | 122 |
+| FL | 100 |
+| OH | 66 |
+| GA | 60 |
 | MI | 56 |
+| IL | 55 |
 | PA | 55 |
-| NJ | 52 |
-| NV | 43 |
+| NJ | 51 |
 | VA | 41 |
+| NV | 39 |
 | IN | 37 |
-| NC | 34 |
 | WA | 34 |
-| AZ | 30 |
+| NC | 32 |
+| AZ | 29 |
 | CO | 28 |
 | LA | 24 |
 | MD | 22 |
@@ -271,7 +282,7 @@ the default 548-day window, and they are not evenly spread. Measured 2026-09-14:
 26 further states hold between 1 and 18 loans in that window; Montana and Wyoming hold
 1. Widen `within_days` to reach further out; each call returns up to 200 loans.
 
-123 of those 1,792 carry no single state: a loan secured by several
+116 of those 1,765 carry no single state: a loan secured by several
 buildings has no property anchor, so a state filter cannot reach it. Those are reached
 through `get_property_record`.
 
@@ -415,10 +426,10 @@ Returns 75 events (page with `next_cursor`), each with the building's `dfx_id`. 
 
 ### One page per question, with the measured coverage on it
 
-- [Which commercial real-estate loans mature in a given state and window?](https://dfxintel.com/ai/real-estate-mcp/cre-loan-maturities): 3,422 LOAN_MATURITY_SCHEDULED, 52 states and territories.
+- [Which commercial real-estate loans mature in a given state and window?](https://dfxintel.com/ai/real-estate-mcp/cre-loan-maturities): 3,395 LOAN_MATURITY_SCHEDULED, 52 states and territories.
 - [Which LIHTC properties are reaching the end of a compliance period?](https://dfxintel.com/ai/real-estate-mcp/lihtc-year-15-data): 11,956 COMPLIANCE_PERIOD_ENDING, 56 states and territories.
 - [Which HUD-subsidised properties have contracts approaching expiry?](https://dfxintel.com/ai/real-estate-mcp/hud-subsidy-expiry-data): 4,721 SUBSIDY_CONTRACT_EXPIRING, 54 states and territories.
-- [Where is commercial real estate in distress, foreclosure or workout?](https://dfxintel.com/ai/real-estate-mcp/distressed-cre-data): 167 DISTRESS_FLAG_RAISED, 128 FORECLOSURE_EVENT, 12 LOAN_MODIFIED, 26 states.
+- [Where is commercial real estate in distress, foreclosure or workout?](https://dfxintel.com/ai/real-estate-mcp/distressed-cre-data): 163 DISTRESS_FLAG_RAISED, 123 FORECLOSURE_EVENT, 12 LOAN_MODIFIED, 26 states.
 - [What did this property sell for, and who owns it?](https://dfxintel.com/ai/real-estate-mcp/property-sales-and-ownership-data): 43,680 PROPERTY_SOLD, 2 states.
 - [Which commercial leases are approaching expiry, and who occupies a building?](https://dfxintel.com/ai/real-estate-mcp/commercial-lease-expiry-data): 3,966 LEASE_EXPIRING, 55 states and territories.
 
