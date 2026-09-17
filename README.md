@@ -38,7 +38,7 @@ empty list, so this server refuses unknown arguments with the served vocabulary
 attached.
 
 > Every number on this page is measured against production, not typed. Last measured
-> **2026-09-16**. Call `dfx_coverage` for the same grid at the moment you read it.
+> **2026-09-17**. Call `dfx_coverage` for the same grid at the moment you read it.
 
 ---
 
@@ -145,11 +145,11 @@ shape what gets built next.
 
 The same connection answers across three more DFX graphs, with one id scheme (`dfx:fo:`, `dfx:isi:`, `dfx:vc:`, and the real estate ids above), one response contract, and cross-graph identity by shared CRD, CIK or EIN only. A same-name entity on another graph is returned as a candidate, never merged.
 
-**Family offices.** 2,335 offices on the graph (849 candidates, 125 confirmed multi-family, 344 probable single-family, 118 outsourced), 4,236 foundations, 637 offices with 13F positions, 175 with observed direct investments. A candidate is a name, never a class; AUM, RAUM and 13F value are three numbers and are never substituted for one another.
+**Family offices.** 2,335 offices on the graph (849 candidates, 125 confirmed multi-family, 344 probable single-family, 118 outsourced), 4,236 foundations, 637 offices with 13F positions, 251 with observed direct investments. A candidate is a name, never a class; AUM, RAUM and 13F value are three numbers and are never substituted for one another.
 
-**Independent sponsors.** 3,677 sponsors, 9,888 capital providers, 97,287 private companies with Department of Labor plan-filing history of which 15,015 carry a transition signal, 27,899 computed company-to-sponsor matches with reasons and blockers, 1,285 announced transactions. A plan-filing signal is one year lagged.
+**Independent sponsors.** 3,674 sponsors, 9,851 capital providers, 97,287 private companies with Department of Labor plan-filing history of which 15,015 carry a transition signal, 28,055 computed company-to-sponsor matches with reasons and blockers, 1,279 announced transactions. A plan-filing signal is one year lagged.
 
-**Venture capital.** None firms (None with a fund raising in the last 18 months), 71,073 funds with every fund amount kept apart (51,922 with Form D sold), 107,128 people, 43,517 companies and 23,211 rounds. Stated sectors are populated on None firms today, so a sector filter on firms answers NOT_COVERED rather than an empty list; a round is never a check.
+**Venture capital.** None firms (None with a fund raising in the last 18 months), 71,074 funds with every fund amount kept apart (52,341 with Form D sold), 107,793 people, 43,952 companies and 23,223 rounds. Stated sectors are populated on None firms today, so a sector filter on firms answers NOT_COVERED rather than an empty list; a round is never a check.
 
 **Across all of them:** `search_entities`, `get_entity` (everything on one id: card, relationships, events, evidence, cross-graph links), `search_people`, `search_relationships`, `relationship_path` (how X connects to Y, every hop an evidenced edge), `search_events`, `verify` (SUPPORTED, PARTIALLY_SUPPORTED, CONTRADICTED or UNKNOWN, with the observations), and the economic tools `find_capital_for_opportunity`, `find_opportunities_for_capital`, `explain_match` (reasons and blockers, never a bare score), `why_now` and `who_should_care`.
 
@@ -164,7 +164,7 @@ misread this server.
 | Object | What it is | Resolvable |
 |---|---|---|
 | `parcel` | Massachusetts. The municipal assessor and registry layer, carrying assessed value, land use and recorded sales. | 291,914 |
-| `property` | National. Federal programme multifamily: HUD, LIHTC and FHA. | 102,021 |
+| `property` | National. Federal programme multifamily: HUD, LIHTC and FHA. | 102,351 |
 | `organization` | Owners, managers, lenders and servicers. | not counted separately |
 
 An address may return one, the other, or both.
@@ -252,7 +252,7 @@ to be filed, so the 19,821 loans on the tape are reached here while
 3,395 maturity events are reachable through the event search.
 
 **How the loans spread.** Of the 19,821 loans, 1,765 mature inside
-the default 548-day window, and they are not evenly spread. Measured 2026-09-16:
+the default 548-day window, and they are not evenly spread. Measured 2026-09-17:
 
 | State | Loans maturing in the next 548 days |
 |---|---|
