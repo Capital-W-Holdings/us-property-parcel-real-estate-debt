@@ -31,14 +31,14 @@ the same grid at call time so an agent never has to guess from an empty result.
 **Auth:** none
 **Registry:** `io.github.Capital-W-Holdings/us-property-parcel-real-estate-debt`
 
-47 tools, all free, unauthenticated and read-only: no key, no signup, no OAuth.
+83 tools, all free, unauthenticated and read-only: no key, no signup, no OAuth.
 
 A tool that answers "no" clearly is worth more to an agent than one that answers an
 empty list, so this server refuses unknown arguments with the served vocabulary
 attached.
 
 > Every number on this page is measured against production, not typed. Last measured
-> **2026-09-18**. Call `dfx_coverage` for the same grid at the moment you read it.
+> **2026-09-19**. Call `dfx_coverage` for the same grid at the moment you read it.
 
 ---
 
@@ -83,7 +83,7 @@ not have to guess and does not have to be told:
 
 ---
 
-## The 47 tools
+## The 83 tools
 
 | Tool | Takes | Returns | Price |
 |---|---|---|---|
@@ -121,6 +121,42 @@ not have to guess and does not have to be told:
 | `find_pe_buyers_for_company` | dfx_id, limit? | Computed buyer_for_company matches from the private equity matcher for one company (a dfx:pe:, dfx:isi: or dfx:vc: company id): each firm with the matcher's rea... | free |
 | `find_pe_companies_for_buyer` | dfx_id, limit? | Computed company_for_buyer matches for one private equity firm (dfx:pe: id): each company (on the private equity, sponsor or venture graph, with its dfx id) wit... | free |
 | `find_pe_addons_for_platform` | dfx_id, limit? | Computed addon_for_platform matches for one platform (a dfx:pe: company id from search_pe_platforms): each candidate company with the matcher's reasons, blocker... | free |
+| `search_ria` | city?, cursor?, entity_type?, firm_class?, firm_crd?, fund_type?, ... | Registered investment advisers (Form ADV: RAUM, clients by type, employees, advisors on IAPD, private funds, class such as INDEPENDENT_WEALTH or WIREHOUSE), reg... | free |
+| `get_ria_firm` | dfx_id | The full card for one registered investment adviser plus its people flows (joins, departures, net, rates over 90 days, 12 and 36 months), growth between annual ... | free |
+| `get_ria_advisor` | dfx_id | One IAPD-registered advisor: name, current firm with class and tenure, employment history as dated registration spans in order (firm, begin, end, current), ever... | free |
+| `resolve_ria_advisor` | crd?, firm?, firm_crd?, limit?, name, state? | Resolve an advisor by name AND a firm (name or CRD), or by individual CRD, to one person card | free |
+| `search_ria_funds` | cursor?, firm_dfx_id?, form_d_file_number?, fund_type?, include_custodians?, limit?, ... | Private funds from Form ADV Schedule D 7.B.(1): fund name, SEC fund id (805-...), type, gross asset value with its as-of date (reported gross assets, NOT fund s... | free |
+| `search_ria_advisor_moves` | advisor_dfx_id?, cursor?, from_dfx_id?, include_bulk?, include_departures?, limit?, ... | Advisors who left one firm and registered at another: the person, from and to firms with class, the registration end and begin dates, the gap, and the move type... | free |
+| `search_ria_teams` | cursor?, from_dfx_id?, include_members?, kind?, limit?, min_members?, ... | Teams: clusters of advisors who left the same firm for the same firm from the same branch state within a 14-day chain, with member count, dates, spread, the fro... | free |
+| `search_ria_ma` | acquirer_crd?, cursor?, firm_dfx_id?, kind?, limit?, min_advisors?, ... | RIA M&A from three factual sources, each labelled: successions the acquirer swore on Form ADV Item 4 (succession); firms whose advisors re-registered whole at o... | free |
+| `search_ria_changes` | cursor?, dfx_id?, event_type?, limit?, signal_family?, since, ... | The RIA event tape by OBSERVATION time: advisor firm changes and departures, team lift-outs and absorptions, successions, RAUM and headcount changes, control pe... | free |
+| `get_ria_trends` | firm_class?, limit?, min_advisors?, min_raum_usd?, sort?, state?, ... | Three derived views from the RIA lane's aggregates: state_stats (SEC-registered firms, wealth firms, RAUM, private funds, advisors, joins, departures and new fi... | free |
+| `get_ria_capital_links` | dfx_id, limit? | For one RIA firm (or one private fund): every link to the private equity, venture, family office and sponsor graphs written on a shared identifier, with the bas... | free |
+| `get_ria_practice` | dfx_id | What a practice looks like from what it filed: reported Form ADV fields (RAUM, discretionary, accounts, employees, advisors, clients and RAUM by type, private f... | free |
+| `search_ria_practices` | archetype?, bank_owned?, cursor?, custody?, financial_planning?, firm_class?, ... | SEC-registered advisers screened on the practice layer: by archetype (HNW_WEALTH_MANAGER, UHNW_PRIVATE_WEALTH, MASS_AFFLUENT_RIA, INSTITUTIONAL_ASSET_MANAGER, R... | free |
+| `search_ria_anomalies` | anomaly_type?, cursor?, family?, firm_class?, firm_crd?, limit?, ... | Reported values and filing-to-filing changes that stand out against a peer group (segment by RAUM band, 30 or more advisers), each with the metric, current and ... | free |
+| `search_ria_offices` | cursor?, firm_class?, firm_crd?, limit?, min_advisors?, sort?, ... | Offices (a firm and an IAPD branch city) ranked by departures, joins, net flow, departure rate, team lift-outs out or in, breakaways in formation (advisors at t... | free |
+| `search_private_credit` | bdc_advisers_only?, class?, cursor?, entity_type?, held_only?, industry?, ... | The capital structure graph behind private markets, built from every BDC's schedule of investments each quarter since 2022 | free |
+| `get_credit_provider` | dfx_id | A credit manager: its classes with basis, the BDCs it advises (from each BDC's own 10-K) with their latest schedules, its credit funds on Form ADV, its sponsor ... | free |
+| `get_bdc_portfolio` | as_of?, cursor?, dfx_id, include_equity?, limit?, sort? | Every position a BDC tagged at one quarter end (the latest unless as_of is given), each in the filer's own figures: borrower, instrument, kind, lien, principal,... | free |
+| `get_borrower_capital_structure` | dfx_id | The borrower group (its spellings and grade), every facility (kind, lien, principal held across lenders as a lower bound, mark, pricing, PIK, maturity with basi... | free |
+| `get_credit_facility` | dfx_id | A facility (one borrower group in one instrument class): size as the sum of BDC pieces with its basis, pricing modal and ranged across pieces, maturity with bas... | free |
+| `search_credit_maturities` | cursor?, from?, lien?, limit?, min_principal_usd?, months?, ... | Debt facilities still on a BDC schedule whose tagged or written maturity falls inside the window (default the next 24 months from today), ordered by date: borro... | free |
+| `search_sponsor_lender` | cursor?, lender_dfx_id?, limit?, min_borrowers?, sort?, sponsor_dfx_id? | Sponsor x lender pairs counted once per borrower held (the lender is the adviser behind the BDCs, or the BDC where the adviser is not read): borrowers, faciliti... | free |
+| `search_private_credit_changes` | by?, cursor?, dfx_id?, event_type?, include_routine?, limit?, ... | Dated changes by effective date (the quarter end where the change is visible) or by first-seen: new borrowers on any schedule, lenders joining and leaving facil... | free |
+| `search_allocators` | allocator_class?, consultant_class?, cursor?, entity_type?, include_components?, limit?, ... | The capital-owner graph: public pensions (every Census unit), corporate and Taft-Hartley DB plans (Form 5500), endowments and foundations (IRS), state pools and... | free |
+| `get_allocator` | dfx_id | For an allocator: the card with reported assets and basis, funded status, the latest allocation policy rows (target, range, actual as printed with the subject's... | free |
+| `search_allocator_commitments` | allocator_dfx_id?, bucket?, consultant_dfx_id?, cursor?, first_time_only?, fund_dfx_id?, ... | One row per line of a plan's own disclosure: allocator, fund as printed, manager and fund resolved to the pe / vc graphs where the resolver matched, bucket, the... | free |
+| `search_re_fund_managers` | crd?, cursor?, include_former?, limit?, max_gav_usd?, min_gav_usd?, ... | Advisers that swear a Real Estate Fund vehicle on Form ADV Schedule D 7.B.(1): one manager is one CRD, with its registration and latest filing, regulatory asset... | free |
+| `get_re_fund_manager` | dfx_id | The manager card, its ten largest vehicles and the whole family by vintage, validated property bindings with the rule and confidence behind each and the propert... | free |
+| `search_re_fund_vehicles` | cursor?, exclude_feeders?, first_reported_year?, include_dropped?, limit?, manager_crd?, ... | Vehicles sworn as Real Estate Funds by their SEC fund id (805-...): the fund and its family and sequence, master, feeder or fund of funds, gross asset value lat... | free |
+| `get_re_fund_vehicle` | dfx_id | The vehicle card with its reporting history year by year as filed (gross asset value, owners, minimum investment, the fund type and name as filed that year), it... | free |
+| `get_re_fund_trends` | limit?, min_gav_usd?, view? | Derived series over the sworn tape, each with its population, derivation and caveat printed beside it: vehicles first reported by year (with the managers filing... | free |
+| `get_capital_paths` | dfx_id, kind?, limit? | Published capital flow paths through one institution: which allocators back this manager and through which fund, which lenders finance this sponsor's borrowers ... | free |
+| `get_commitments` | dfx_id, include_holdings?, limit? | The commitment tapes, in one call, for any id they reference: the allocator tape (a public plan's own disclosure, with the plan, the fund as printed, the manage... | free |
+| `get_borrower_facilities` | dfx_id, held_only?, limit? | Every facility a borrower group has on the BDC tape (kind, lien, principal held across lenders as a lower bound, mark on cost, pricing, PIK, maturity with its b... | free |
+| `get_sponsor_lenders` | dfx_id, limit?, min_borrowers?, sort? | Sponsor by lender pairs counted once per borrower held: borrowers, facilities, principal held, first and latest quarter, new borrowers in the last four quarters... | free |
+| `search_capital_changes` | dfx_id?, event_type?, graph, include_seeded?, limit?, since | The change tape for the three capital graphs by FIRST SIGHT: the day DFX first saw each row, which is the only order a poller can trust | free |
 | `search_entities` | active_only?, asset_class?, city?, cursor?, domain?, entity_type?, ... | One search across family offices, independent sponsors and their capital providers, private companies, venture firms, private equity firms and funds, and real e... | free |
 | `resolve_name` | domain?, entity_type?, limit?, name | Resolve a firm, fund, person or company name to canonical dfx ids from the Data Factory's index of every published name and alias (former names, dbas, legal nam... | free |
 | `get_entity` | dfx_id, event_limit?, evidence_limit?, include?, relationship_limit? | For any DFX id: the full card, published relationships with sources and dates, recent events, evidence rows (the observation each fact traces to), cross-graph s... | free |
@@ -173,24 +209,26 @@ An address may return one, the other, or both.
 
 Massachusetts and New York: 95,562 instruments over 118,733 property links.
 
-| Source | Geography | Grain | Buyer | Seller | Repeat sales |
+| Tape | Geography | Grain | Buyer | Seller | Repeat sales |
 |---|---|---|---|---|---|
-| `massgis_l3` | Massachusetts, statewide | assessor roster: one sale date and price per parcel | yes | **no** | **no** |
-| `nyc_acris` | New York City, five boroughs | recorded instrument, grouped into economic transactions | yes | yes | yes |
+| `municipal recorder extract` | New York City, five boroughs | recorded instrument, grouped into economic transactions | yes | yes | yes |
+| `statewide assessor roster` | Massachusetts, statewide | assessor roster: one sale date and price per parcel | yes | **no** | **no** |
 
-- **`massgis_l3`**: An assessor roster carries the LAST sale, so repeat-sale pairs and
-  hold periods are not derivable from it at any volume. A deed repeats its full
-  consideration on every parcel it covers, so allocated_consideration is carried
-  separately from consideration and allocation_basis says when a split is ours.
+- **`municipal recorder extract`**: deeds at or above $10,000,000 consideration. This is
+  a deliberate cut by VALUE and not by date: a date cut would orphan the earlier leg of a
+  repeat-sale pair. A smaller New York sale is outside the tranche, not absent from the
+  city.
 
-- **`nyc_acris`**: deeds at or above $10,000,000 consideration. This is a deliberate cut
-  by VALUE and not by date: a date cut would orphan the earlier leg of a repeat-sale pair.
-  A smaller New York sale is outside the tranche, not absent from the city.
+- **`municipal recorder extract`**: Fourteen same-day deeds between the same parties are
+  ONE transaction with fourteen instrument ids preserved, and a 318-property deed is one
+  transaction linked to 318 properties. Consideration is stated once per instrument and is
+  never split across its properties. No natural person is named in an event headline, on
+  either side.
 
-- **`nyc_acris`**: Fourteen same-day deeds between the same parties are ONE transaction
-  with fourteen instrument ids preserved, and a 318-property deed is one transaction
-  linked to 318 properties. Consideration is stated once per instrument and is never split
-  across its properties. No natural person is named in an event headline, on either side.
+- **`statewide assessor roster`**: An assessor roster carries the LAST sale, so
+  repeat-sale pairs and hold periods are not derivable from it at any volume. A deed
+  repeats its full consideration on every parcel it covers, so allocated_consideration is
+  carried separately from consideration and allocation_basis says when a split is ours.
 
 ### Event coverage, measured
 
@@ -252,7 +290,7 @@ to be filed, so the 19,821 loans on the tape are reached here while
 3,395 maturity events are reachable through the event search.
 
 **How the loans spread.** Of the 19,821 loans, 1,765 mature inside
-the default 548-day window, and they are not evenly spread. Measured 2026-09-18:
+the default 548-day window, and they are not evenly spread. Measured 2026-09-19:
 
 | State | Loans maturing in the next 548 days |
 |---|---|
@@ -449,9 +487,16 @@ Returns 75 events (page with `next_cursor`), each with the building's `dfx_id`. 
 - **Every returned fact carries its provenance**: the source, the evidence class, and for sales the registry book and page.
 - **Coverage is a tool, not a footnote.** Call `dfx_coverage` before concluding that an empty result means an absent market.
 
-### Served sources
+### What is behind the rows
 
-`boston_assessing`, `ffiec_ubpr`, `fhfa_pudb_mf`, `hud_fha_multifamily`, `hud_multifamily_arcgis`, `hud_psh`, `massgis_l3`, `nyc_acris`, `sec_abs_ee`
+9 registered feeds pass the rights filter and serve this endpoint, in 4 families:
+
+- **Federal program and statistical data** (4): Federal programme registers and statistical series: who is funded, insured, assisted or measured.
+- **County and municipal records** (3): The property layer: assessment, recorded instruments, permits, code enforcement and tax status.
+- **Federal regulator filings** (1): What firms, funds and plans are required to tell a federal regulator, on the regulator's own schedule.
+- **Securitised debt reporting** (1): Loan-level and servicer reporting on debt that has been securitised, month by month.
+
+Every returned row names its own source, the date it was effective and the date DFX read it. Which individual feeds sit inside a family is not published.
 
 
 ## Terms
