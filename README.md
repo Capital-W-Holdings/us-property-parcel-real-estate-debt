@@ -38,7 +38,7 @@ empty list, so this server refuses unknown arguments with the served vocabulary
 attached.
 
 > Every number on this page is measured against production, not typed. Last measured
-> **2026-09-21**. Call `dfx_coverage` for the same grid at the moment you read it.
+> **2026-09-22**. Call `dfx_coverage` for the same grid at the moment you read it.
 
 ---
 
@@ -182,11 +182,11 @@ shape what gets built next.
 
 The same connection answers across three more DFX graphs, with one id scheme (`dfx:fo:`, `dfx:isi:`, `dfx:vc:`, and the real estate ids above), one response contract, and cross-graph identity by shared CRD, CIK or EIN only. A same-name entity on another graph is returned as a candidate, never merged.
 
-**Family offices.** 2,335 offices on the graph (852 candidates, 125 confirmed multi-family, 341 probable single-family, 121 outsourced), 4,236 foundations, 637 offices with 13F positions, 276 with observed direct investments. A candidate is a name, never a class; AUM, RAUM and 13F value are three numbers and are never substituted for one another.
+**Family offices.** 2,318 offices on the graph (845 candidates, 123 confirmed multi-family, 340 probable single-family, 120 outsourced), 4,236 foundations, 637 offices with 13F positions, 354 with observed direct investments. A candidate is a name, never a class; AUM, RAUM and 13F value are three numbers and are never substituted for one another.
 
 **Independent sponsors.** 3,937 sponsors, 9,957 capital providers, 97,287 private companies with Department of Labor plan-filing history of which 15,024 carry a transition signal, 28,519 computed company-to-sponsor matches with reasons and blockers, 1,492 announced transactions. A plan-filing signal is one year lagged.
 
-**Venture capital.** None firms (None with a fund raising in the last 18 months), 71,074 funds with every fund amount kept apart (52,341 with Form D sold), 108,223 people, 44,318 companies and 23,236 rounds. Stated sectors are populated on None firms today, so a sector filter on firms answers NOT_COVERED rather than an empty list; a round is never a check.
+**Venture capital.** None firms (None with a fund raising in the last 18 months), 71,074 funds with every fund amount kept apart (52,341 with Form D sold), 108,223 people, 44,320 companies and 23,239 rounds. Stated sectors are populated on None firms today, so a sector filter on firms answers NOT_COVERED rather than an empty list; a round is never a check.
 
 **Across all of them:** `search_entities`, `get_entity` (everything on one id: card, relationships, events, evidence, cross-graph links), `search_people`, `search_relationships`, `relationship_path` (how X connects to Y, every hop an evidenced edge), `search_events`, `verify` (SUPPORTED, PARTIALLY_SUPPORTED, CONTRADICTED or UNKNOWN, with the observations), and the economic tools `find_capital_for_opportunity`, `find_opportunities_for_capital`, `explain_match` (reasons and blockers, never a bare score), `why_now` and `who_should_care`.
 
@@ -233,7 +233,7 @@ Massachusetts and New York: 95,562 instruments over 118,733 property links.
 
 ### Event coverage, measured
 
-83,443 publishable events across 16 types, written by 9 sources on a published allowlist of 7.
+83,443 publishable events across 16 types, written by 9 sources on a published allowlist of 9.
 
 | Event type | States | Published |
 |---|---|---|
@@ -291,7 +291,7 @@ to be filed, so the 19,821 loans on the tape are reached here while
 3,395 maturity events are reachable through the event search.
 
 **How the loans spread.** Of the 19,821 loans, 1,765 mature inside
-the default 548-day window, and they are not evenly spread. Measured 2026-09-21:
+the default 548-day window, and they are not evenly spread. Measured 2026-09-22:
 
 | State | Loans maturing in the next 548 days |
 |---|---|
@@ -490,11 +490,11 @@ Returns 75 events (page with `next_cursor`), each with the building's `dfx_id`. 
 
 ### What is behind the rows
 
-7 registered feeds pass the rights filter and serve this endpoint, in 4 families:
+9 registered feeds pass the rights filter and serve this endpoint, in 4 families:
 
-- **Federal regulator filings** (2): What firms, funds and plans are required to tell a federal regulator, on the regulator's own schedule.
-- **Federal program and statistical data** (2): Federal programme registers and statistical series: who is funded, insured, assisted or measured.
-- **County and municipal records** (2): The property layer: assessment, recorded instruments, permits, code enforcement and tax status.
+- **Federal program and statistical data** (4): Federal programme registers and statistical series: who is funded, insured, assisted or measured.
+- **County and municipal records** (3): The property layer: assessment, recorded instruments, permits, code enforcement and tax status.
+- **Federal regulator filings** (1): What firms, funds and plans are required to tell a federal regulator, on the regulator's own schedule.
 - **Securitised debt reporting** (1): Loan-level and servicer reporting on debt that has been securitised, month by month.
 
 Every returned row names its own source, the date it was effective and the date DFX read it. Which individual feeds sit inside a family is not published.
