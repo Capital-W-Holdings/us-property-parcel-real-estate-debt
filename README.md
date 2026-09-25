@@ -7,8 +7,8 @@
 The real estate domain answers dated questions about two things: **United States commercial and
 federal-programme real estate debt**, where loan maturities are published across
 52 state codes, compliance expiries across 56 and subsidy expiries across
-54, and **property records**, where 291,914 Massachusetts and New York parcels carry
-ownership and assessed value and 95,562 recorded sale instruments cover Massachusetts and New York.
+54, and **property records**, where 292,039 Massachusetts and New York parcels carry
+ownership and assessed value and 95,562 recorded sale instruments cover the District of Columbia, Massachusetts and New York.
 Call it when an agent needs to know who owns a specific building, what it last sold
 for, or which loans and subsidies come due in a given state and time window, with the
 source and the observation date attached to every claim.
@@ -31,14 +31,14 @@ the same grid at call time so an agent never has to guess from an empty result.
 **Auth:** none
 **Registry:** `io.github.Capital-W-Holdings/us-property-parcel-real-estate-debt`
 
-84 tools, all free, unauthenticated and read-only: no key, no signup, no OAuth.
+92 tools, all free, unauthenticated and read-only: no key, no signup, no OAuth.
 
 A tool that answers "no" clearly is worth more to an agent than one that answers an
 empty list, so this server refuses unknown arguments with the served vocabulary
 attached.
 
 > Every number on this page is measured against production, not typed. Last measured
-> **2026-09-22**. Call `dfx_coverage` for the same grid at the moment you read it.
+> **2026-09-25**. Call `dfx_coverage` for the same grid at the moment you read it.
 
 ---
 
@@ -83,7 +83,7 @@ not have to guess and does not have to be told:
 
 ---
 
-## The 84 tools
+## The 92 tools
 
 | Tool | Takes | Returns | Price |
 |---|---|---|---|
@@ -99,13 +99,14 @@ not have to guess and does not have to be told:
 | `changes_since` | an opaque cursor | what DFX has **learned** since your cursor | free |
 | `debt_maturity_schedule` | state, within_days?, limit? | the loan tape: principal, lender, instrument, maturity, secured property | free |
 | `dfx_coverage` | nothing | measured coverage, served sources, object types, known gaps | free |
-| `search_family_offices` | asset_class?, city?, class?, cursor?, has_real_estate?, has_sponsor_relationships?, ... | Family offices as compact cards: class (single, multi, embedded...) with confidence, whether they invest directly, sectors and asset classes on record, check si... | free |
+| `search_family_offices` | allocates_to_managers?, asset_class?, city?, class?, co_invested_with?, counterparty_kind?, ... | Family offices as compact cards: class (single, multi, embedded...) with confidence, whether they invest directly, sectors and asset classes on record, check si... | free |
+| `rank_family_offices` | allocates_to_managers?, asset_classes?, backs_independent_sponsors?, capital_max_usd?, capital_min_usd?, check_max_usd?, ... | THE tool for any family office question with criteria (sector, check size, capital, sponsors, co-investors, recent events, geography, reachable people) | free |
 | `get_family_office` | dfx_id | The full card for one family office: profile, AUM / RAUM / 13F value kept apart with their as-of dates, behaviour, the people who run it with roles, its observe... | free |
 | `search_family_office_investments` | asset_class?, include_candidates?, investment_kind?, limit?, office_dfx_id?, sector?, ... | Dated investments family offices have been observed making: target, sector, asset class, structure, control or minority, lead or participant, amounts where disc... | free |
 | `search_independent_sponsors` | city?, include_unverified?, kind?, limit?, min_confidence?, query?, ... | Verified independent sponsor firms (deal-by-deal acquirers of lower middle market companies) as compact cards: verification status, classification, mandate summ... | free |
 | `get_independent_sponsor` | dfx_id | The full card for any entity on the sponsor graph: a sponsor (with its verification status, the companies resembling its observed deals as counted facts and rea... | free |
 | `search_sponsor_capital_providers` | limit?, making_new_investments?, min_fund_size_usd?, provider_type?, query?, sbic_licensed?, ... | SBICs, mezzanine and private equity funds, and family offices observed providing capital to independent sponsors: provider type, strategy, fund style, fund size... | free |
-| `search_private_companies` | city?, limit?, max_participants?, min_opportunity?, min_participants?, naics_prefix?, ... | US private companies whose filings (Form 5500 plan history, final filings, ownership changes) show a transition: vertical, plan participants as a size proxy, EB... | free |
+| `search_private_companies` | city?, limit?, max_participants?, min_opportunity?, min_participants?, naics_prefix?, ... | US private companies whose filings (Form 5500 plan history, final filings, ownership changes) record a change: vertical, plan participants as a size proxy, EBIT... | free |
 | `search_sponsor_deals` | limit?, query?, since?, sponsor_dfx_id?, state?, target_dfx_id?, ... | Announced acquisitions, recapitalisations and exits by independent sponsors: sponsor, target, dates, enterprise value range where disclosed, structure, parties ... | free |
 | `search_pending_ownership_changes` | changed_since?, limit?, query?, state?, tag?, view? | OFFICIAL state records that a skilled nursing facility's ownership, control or operator is changing, before the change takes effect (Kentucky, New York, Rhode I... | free |
 | `search_vc_firms` | active_only?, city?, emerging_manager?, limit?, min_investments?, query?, ... | Venture firms as compact cards: stated sectors, stages, geography and check size beside OBSERVED behaviour (investments in the last 6 and 12 months, lead count,... | free |
@@ -171,6 +172,13 @@ not have to guess and does not have to be told:
 | `explain_match` | dfx_id_a, dfx_id_b | For an investor and an opportunity (either order): MATCH REASONS, BLOCKERS, SUPPORTING OBSERVATIONS, COMPARABLE HISTORY (the investor's dated investments in the... | free |
 | `why_now` | dfx_id, within_days? | Evidence-backed reasons an entity matters now: recent filings, vehicles formed, deployments, people moves, fundraising, transition signals, loan maturities, eac... | free |
 | `who_should_care` | dfx_id?, event_id?, limit? | Given an entity or an event id: who is likely to care and why | free |
+| `search_documents` | dfx_id?, limit?, query | Full-text search over DFX's document index: verbatim passages from the documents the graph already points at (SEC filings and BDC schedules of investments, publ... | free |
+| `find_real_estate_lenders` | band_max_usd?, band_min_usd?, city?, limit?, property_type, since?, ... | Lenders ranked on the commercial real estate loans they ORIGINATED, from CMBS loan-level filings (SEC ABS-EE): same property type, loans in the states and city ... | free |
+| `search_cmbs_loans` | cursor?, distress?, limit?, loan_keys?, maturity_from?, maturity_to?, ... | Loans on the ACTIVE CMBS tape (SEC ABS-EE, each loan's latest monthly reading, read within 100 days of the newest period) with the servicer's own fields: paymen... | free |
+| `search_signals` | affected_dfx_id?, cursor?, domain?, family?, include_audience?, limit?, ... | The governed signal layer the site ranks by (actionable now, public or sellable only): each card names its family, the subject with its dfx id, what changed, wh... | free |
+| `search_opportunities` | condition_kind?, cursor?, family?, intelligence_class?, limit?, min_rank?, ... | Opportunity summaries: the condition (credit deterioration, refinancing window, lender group change, capital raised, advisor movement, servicing distress ...), ... | free |
+| `search_forward_opportunities` | contact?, cursor?, entity_dfx_id?, evidence?, limit?, max_economic?, ... | Forward opportunities across DFX: an entity, the event a measured pattern points to (a borrower reaching non-accrual, a pension plan re-upping with a manager, a... | free |
+| `get_forward_signal_ledger` | cursor?, limit?, signal_key?, status?, vertical? | The ledger behind every forward claim: for each pattern, its definition, population, test period, base rate, rate among entities showing it, lift with its inter... | free |
 
 **Start with `what_can_dfx_answer`** if you do not know what to ask for. It says no
 clearly when the answer is no, and it records the ask, so questions DFX cannot answer
@@ -182,11 +190,11 @@ shape what gets built next.
 
 The same connection answers across three more DFX graphs, with one id scheme (`dfx:fo:`, `dfx:isi:`, `dfx:vc:`, and the real estate ids above), one response contract, and cross-graph identity by shared CRD, CIK or EIN only. A same-name entity on another graph is returned as a candidate, never merged.
 
-**Family offices.** 2,318 offices on the graph (845 candidates, 123 confirmed multi-family, 340 probable single-family, 120 outsourced), 4,236 foundations, 637 offices with 13F positions, 354 with observed direct investments. A candidate is a name, never a class; AUM, RAUM and 13F value are three numbers and are never substituted for one another.
+**Family offices.** 2,492 offices on the graph (825 candidates, 161 confirmed multi-family, 339 probable single-family, 122 outsourced), 4,238 foundations, 753 offices with 13F positions, 355 with observed direct investments. A candidate is a name, never a class; AUM, RAUM and 13F value are three numbers and are never substituted for one another.
 
-**Independent sponsors.** 3,937 sponsors, 9,957 capital providers, 97,287 private companies with Department of Labor plan-filing history of which 15,024 carry a transition signal, 28,519 computed company-to-sponsor matches with reasons and blockers, 1,492 announced transactions. A plan-filing signal is one year lagged.
+**Independent sponsors.** 3,986 sponsors, 10,025 capital providers, 97,293 private companies with Department of Labor plan-filing history of which 17,064 carry a transition signal, 207,130 computed company-to-sponsor matches with reasons and blockers, 1,492 announced transactions. A plan-filing signal is one year lagged.
 
-**Venture capital.** None firms (None with a fund raising in the last 18 months), 71,074 funds with every fund amount kept apart (52,341 with Form D sold), 108,223 people, 44,320 companies and 23,239 rounds. Stated sectors are populated on None firms today, so a sector filter on firms answers NOT_COVERED rather than an empty list; a round is never a check.
+**Venture capital.** None firms (None with a fund raising in the last 18 months), 76,934 funds with every fund amount kept apart (54,574 with Form D sold), 113,204 people, 47,493 companies and 30,795 rounds. Stated sectors are populated on None firms today, so a sector filter on firms answers NOT_COVERED rather than an empty list; a round is never a check.
 
 **Across all of them:** `search_entities`, `get_entity` (everything on one id: card, relationships, events, evidence, cross-graph links), `search_people`, `search_relationships`, `relationship_path` (how X connects to Y, every hop an evidenced edge), `search_events`, `verify` (SUPPORTED, PARTIALLY_SUPPORTED, CONTRADICTED or UNKNOWN, with the observations), and the economic tools `find_capital_for_opportunity`, `find_opportunities_for_capital`, `explain_match` (reasons and blockers, never a bare score), `why_now` and `who_should_care`.
 
@@ -200,15 +208,15 @@ misread this server.
 
 | Object | What it is | Resolvable |
 |---|---|---|
-| `parcel` | Massachusetts. The municipal assessor and registry layer, carrying assessed value, land use and recorded sales. | 291,914 |
-| `property` | National. Federal programme multifamily: HUD, LIHTC and FHA. | 102,351 |
+| `parcel` | Massachusetts. The municipal assessor and registry layer, carrying assessed value, land use and recorded sales. | 292,039 |
+| `property` | National. Federal programme multifamily: HUD, LIHTC and FHA. | 100,277 |
 | `organization` | Owners, managers, lenders and servicers. | not counted separately |
 
 An address may return one, the other, or both.
 
 ### Recorded sales
 
-Massachusetts and New York: 95,562 instruments over 118,733 property links.
+the District of Columbia, Massachusetts and New York: 95,562 instruments over 118,733 property links.
 
 | Tape | Geography | Grain | Buyer | Seller | Repeat sales |
 |---|---|---|---|---|---|
@@ -233,35 +241,39 @@ Massachusetts and New York: 95,562 instruments over 118,733 property links.
 
 ### Event coverage, measured
 
-83,443 publishable events across 16 types, written by 9 sources on a published allowlist of 9.
+133,404 publishable events across 19 types, written by 20 sources on a published allowlist of 16.
 
 | Event type | States | Published |
 |---|---|---|
-| `PROPERTY_SOLD` | 2 | 43,680 |
+| `PROPERTY_SOLD` | 3 | 47,479 |
+| `TAX_LIEN_LISTED` | 1 | 29,368 |
+| `PERMIT_ISSUED` | 3 | 13,847 |
 | `COMPLIANCE_PERIOD_ENDING` | 56 | 11,956 |
 | `SUBSIDY_CONTRACT_EXPIRING` | 54 | 4,721 |
-| `PERMIT_ISSUED` | 1 | 4,203 |
-| `LEASE_EXPIRING` | 55 | 3,966 |
+| `LEASE_EXPIRING` | 56 | 4,153 |
+| `FORECLOSURE_FILED` | 1 | 4,054 |
 | `PORTFOLIO_EXPANDED` | 53 | 3,528 |
-| `LOAN_MATURITY_SCHEDULED` | 52 | 3,395 |
+| `LOAN_MATURITY_SCHEDULED` | 52 | 3,281 |
+| `CERTIFICATE_OF_OCCUPANCY` | 2 | 3,273 |
 | `PORTFOLIO_CONTRACTED` | 54 | 3,181 |
-| `CERTIFICATE_OF_OCCUPANCY` | 1 | 2,768 |
-| `DEMOLITION_FILED` | 1 | 881 |
-| `USE_CONVERSION_PERMITTED` | 1 | 849 |
-| `DISTRESS_FLAG_RAISED` | 26 | 163 |
+| `DISTRESS_FLAG_RAISED` | 26 | 1,430 |
+| `DEMOLITION_FILED` | 2 | 1,347 |
+| `USE_CONVERSION_PERMITTED` | 1 | 923 |
+| `VACANT_FORECLOSURE_REGISTERED` | 0 | 711 |
 | `FORECLOSURE_EVENT` | 21 | 123 |
 | `PERMIT_STATUS_CHANGED` | 0 | 13 |
 | `LOAN_MODIFIED` | 5 | 12 |
 | `BANKRUPTCY_EVENT` | 4 | 4 |
 
-`CERTIFICATE_OF_OCCUPANCY`, `DEMOLITION_FILED`, `PERMIT_ISSUED`,
-`USE_CONVERSION_PERMITTED` are Massachusetts only. `COMPLIANCE_PERIOD_ENDING`,
-`LEASE_EXPIRING`, `LOAN_MATURITY_SCHEDULED`, `PORTFOLIO_CONTRACTED`,
-`PORTFOLIO_EXPANDED`, `SUBSIDY_CONTRACT_EXPIRING` are national. Multi-state, with the
-number of states each reaches: `DISTRESS_FLAG_RAISED` (26), `FORECLOSURE_EVENT` (21),
-`LOAN_MODIFIED` (5), `BANKRUPTCY_EVENT` (4), `PROPERTY_SOLD` (2).
-`PERMIT_STATUS_CHANGED` carries rows that resolve to no state at all, so a state filter
-cannot reach it.
+`USE_CONVERSION_PERMITTED` are Massachusetts only. `TAX_LIEN_LISTED` are New York only.
+`FORECLOSURE_FILED` are Pennsylvania only. `COMPLIANCE_PERIOD_ENDING`, `LEASE_EXPIRING`,
+`LOAN_MATURITY_SCHEDULED`, `PORTFOLIO_CONTRACTED`, `PORTFOLIO_EXPANDED`,
+`SUBSIDY_CONTRACT_EXPIRING` are national. Multi-state, with the number of states each
+reaches: `DISTRESS_FLAG_RAISED` (26), `FORECLOSURE_EVENT` (21), `LOAN_MODIFIED` (5),
+`BANKRUPTCY_EVENT` (4), `PERMIT_ISSUED` (3), `PROPERTY_SOLD` (3),
+`CERTIFICATE_OF_OCCUPANCY` (2), `DEMOLITION_FILED` (2). `PERMIT_STATUS_CHANGED`,
+`VACANT_FORECLOSURE_REGISTERED` carries rows that resolve to no state at all, so a state
+filter cannot reach it.
 
 ---
 
@@ -288,14 +300,14 @@ row per loan, up to 200 rows instead of 50, with the population stated so you ca
 complete answer from a truncated one. The two populations are different sizes on purpose
 and both numbers are true: an event has to be promoted to a single place, a loan only has
 to be filed, so the 19,821 loans on the tape are reached here while
-3,395 maturity events are reachable through the event search.
+3,281 maturity events are reachable through the event search.
 
 **How the loans spread.** Of the 19,821 loans, 1,765 mature inside
-the default 548-day window, and they are not evenly spread. Measured 2026-09-22:
+the default 548-day window, and they are not evenly spread. Measured 2026-09-25:
 
 | State | Loans maturing in the next 548 days |
 |---|---|
-| CA | 327 |
+| CA | 328 |
 | NY | 196 |
 | TX | 119 |
 | FL | 99 |
@@ -303,24 +315,24 @@ the default 548-day window, and they are not evenly spread. Measured 2026-09-22:
 | GA | 60 |
 | MI | 56 |
 | PA | 55 |
-| IL | 53 |
+| IL | 54 |
 | NJ | 50 |
+| VA | 40 |
 | NV | 39 |
-| VA | 39 |
+| IN | 35 |
 | WA | 33 |
-| IN | 31 |
-| NC | 30 |
+| NC | 32 |
 | AZ | 28 |
 | CO | 28 |
 | LA | 24 |
 | MD | 21 |
-| SC | 20 |
+| SC | 21 |
+| MO | 20 |
 
-28 further states hold between 1 and 19 loans in that window; Montana, Nebraska and
-Wyoming hold 1. Widen `within_days` to reach further out; each call returns up to 200
-loans.
+27 further states hold between 1 and 18 loans in that window; Montana and Wyoming hold
+1. Widen `within_days` to reach further out; each call returns up to 200 loans.
 
-164 of those 1,765 carry no single state: a loan secured by several
+145 of those 1,765 carry no single state: a loan secured by several
 buildings has no property anchor, so a state filter cannot reach it. Those are reached
 through `get_property_record`.
 
@@ -460,16 +472,16 @@ Returns `matched: 8` with each bank's CRE book against equity and assets, noncur
 {"tool": "search_property_events", "arguments": {"event_type": "LOAN_MATURITY_SCHEDULED", "state": "TX", "within_days": 365, "limit": 50}}
 ```
 
-Returns 75 events (page with `next_cursor`), each with the building's `dfx_id`. Then, for any row, `get_property_record` with that id returns the loan itself free: current principal, interest rate, original principal, maturity and basis. `debt_maturity_schedule` is the same population as one deduplicated statewide list with the lender name and a completeness figure.
+Returns 73 events (page with `next_cursor`), each with the building's `dfx_id`. Then, for any row, `get_property_record` with that id returns the loan itself free: current principal, interest rate, original principal, maturity and basis. `debt_maturity_schedule` is the same population as one deduplicated statewide list with the lender name and a completeness figure.
 
 ### One page per question, with the measured coverage on it
 
-- [Which commercial real-estate loans mature in a given state and window?](https://dfxintel.com/ai/real-estate-mcp/cre-loan-maturities): 3,395 LOAN_MATURITY_SCHEDULED, 52 states and territories.
+- [Which commercial real-estate loans mature in a given state and window?](https://dfxintel.com/ai/real-estate-mcp/cre-loan-maturities): 3,281 LOAN_MATURITY_SCHEDULED, 52 states and territories.
 - [Which LIHTC properties are reaching the end of a compliance period?](https://dfxintel.com/ai/real-estate-mcp/lihtc-year-15-data): 11,956 COMPLIANCE_PERIOD_ENDING, 56 states and territories.
 - [Which HUD-subsidised properties have contracts approaching expiry?](https://dfxintel.com/ai/real-estate-mcp/hud-subsidy-expiry-data): 4,721 SUBSIDY_CONTRACT_EXPIRING, 54 states and territories.
-- [Where is commercial real estate in distress, foreclosure or workout?](https://dfxintel.com/ai/real-estate-mcp/distressed-cre-data): 163 DISTRESS_FLAG_RAISED, 123 FORECLOSURE_EVENT, 12 LOAN_MODIFIED, 26 states.
-- [What did this property sell for, and who owns it?](https://dfxintel.com/ai/real-estate-mcp/property-sales-and-ownership-data): 43,680 PROPERTY_SOLD, 2 states.
-- [Which commercial leases are approaching expiry, and who occupies a building?](https://dfxintel.com/ai/real-estate-mcp/commercial-lease-expiry-data): 3,966 LEASE_EXPIRING, 55 states and territories.
+- [Where is commercial real estate in distress, foreclosure or workout?](https://dfxintel.com/ai/real-estate-mcp/distressed-cre-data): 1,430 DISTRESS_FLAG_RAISED, 123 FORECLOSURE_EVENT, 12 LOAN_MODIFIED, 26 states.
+- [What did this property sell for, and who owns it?](https://dfxintel.com/ai/real-estate-mcp/property-sales-and-ownership-data): 47,479 PROPERTY_SOLD, 3 states.
+- [Which commercial leases are approaching expiry, and who occupies a building?](https://dfxintel.com/ai/real-estate-mcp/commercial-lease-expiry-data): 4,153 LEASE_EXPIRING, 56 states and territories.
 
 ## Questions it is not good at, and will say so
 
@@ -490,12 +502,13 @@ Returns 75 events (page with `next_cursor`), each with the building's `dfx_id`. 
 
 ### What is behind the rows
 
-9 registered feeds pass the rights filter and serve this endpoint, in 4 families:
+16 registered feeds pass the rights filter and serve this endpoint, in 5 families:
 
+- **County and municipal records** (9): The property layer: assessment, recorded instruments, permits, code enforcement and tax status.
 - **Federal program and statistical data** (4): Federal programme registers and statistical series: who is funded, insured, assisted or measured.
-- **County and municipal records** (3): The property layer: assessment, recorded instruments, permits, code enforcement and tax status.
 - **Federal regulator filings** (1): What firms, funds and plans are required to tell a federal regulator, on the regulator's own schedule.
 - **Securitised debt reporting** (1): Loan-level and servicer reporting on debt that has been securitised, month by month.
+- **Public records** (1): Public records that do not sit in one of the families above.
 
 Every returned row names its own source, the date it was effective and the date DFX read it. Which individual feeds sit inside a family is not published.
 
