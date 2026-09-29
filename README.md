@@ -31,14 +31,14 @@ the same grid at call time so an agent never has to guess from an empty result.
 **Auth:** none
 **Registry:** `io.github.Capital-W-Holdings/us-property-parcel-real-estate-debt`
 
-92 tools, all free, unauthenticated and read-only: no key, no signup, no OAuth.
+102 tools, all free, unauthenticated and read-only: no key, no signup, no OAuth.
 
 A tool that answers "no" clearly is worth more to an agent than one that answers an
 empty list, so this server refuses unknown arguments with the served vocabulary
 attached.
 
 > Every number on this page is measured against production, not typed. Last measured
-> **2026-09-25**. Call `dfx_coverage` for the same grid at the moment you read it.
+> **2026-09-29**. Call `dfx_coverage` for the same grid at the moment you read it.
 
 ---
 
@@ -83,7 +83,7 @@ not have to guess and does not have to be told:
 
 ---
 
-## The 92 tools
+## The 102 tools
 
 | Tool | Takes | Returns | Price |
 |---|---|---|---|
@@ -129,7 +129,7 @@ not have to guess and does not have to be told:
 | `search_ria_funds` | cursor?, firm_dfx_id?, form_d_file_number?, fund_type?, include_custodians?, limit?, ... | Private funds from Form ADV Schedule D 7.B.(1): fund name, SEC fund id (805-...), type, gross asset value with its as-of date (reported gross assets, NOT fund s... | free |
 | `search_ria_advisor_moves` | advisor_dfx_id?, cursor?, from_dfx_id?, include_bulk?, include_departures?, limit?, ... | Advisors who left one firm and registered at another: the person, from and to firms with class, the registration end and begin dates, the gap, and the move type... | free |
 | `search_ria_teams` | cursor?, from_dfx_id?, include_members?, kind?, limit?, min_members?, ... | Teams: clusters of advisors who left the same firm for the same firm from the same branch state within a 14-day chain, with member count, dates, spread, the fro... | free |
-| `search_ria_ma` | acquirer_crd?, cursor?, firm_dfx_id?, kind?, limit?, min_advisors?, ... | RIA M&A from three factual sources, each labelled: successions the acquirer swore on Form ADV Item 4 (succession); firms whose advisors re-registered whole at o... | free |
+| `search_ria_ma` | acquirer?, acquirer_crd?, cursor?, firm_dfx_id?, kind?, limit?, ... | RIA M&A from three factual sources, each labelled: successions the acquirer swore on Form ADV Item 4 (succession); firms whose advisors re-registered whole at o... | free |
 | `search_ria_changes` | cursor?, dfx_id?, event_type?, limit?, signal_family?, since, ... | The RIA event tape by OBSERVATION time: advisor firm changes and departures, team lift-outs and absorptions, successions, RAUM and headcount changes, control pe... | free |
 | `get_ria_trends` | firm_class?, limit?, min_advisors?, min_raum_usd?, sort?, state?, ... | Three derived views from the RIA lane's aggregates: state_stats (SEC-registered firms, wealth firms, RAUM, private funds, advisors, joins, departures and new fi... | free |
 | `get_ria_capital_links` | dfx_id, limit? | For one RIA firm (or one private fund): every link to the private equity, venture, family office and sponsor graphs written on a shared identifier, with the bas... | free |
@@ -137,6 +137,9 @@ not have to guess and does not have to be told:
 | `search_ria_practices` | archetype?, bank_owned?, cursor?, custody?, financial_planning?, firm_class?, ... | SEC-registered advisers screened on the practice layer: by archetype (HNW_WEALTH_MANAGER, UHNW_PRIVATE_WEALTH, MASS_AFFLUENT_RIA, INSTITUTIONAL_ASSET_MANAGER, R... | free |
 | `search_ria_anomalies` | anomaly_type?, cursor?, family?, firm_class?, firm_crd?, limit?, ... | Reported values and filing-to-filing changes that stand out against a peer group (segment by RAUM band, 30 or more advisers), each with the metric, current and ... | free |
 | `search_ria_offices` | cursor?, firm_class?, firm_crd?, limit?, min_advisors?, sort?, ... | Offices (a firm and an IAPD branch city) ranked by departures, joins, net flow, departure rate, team lift-outs out or in, breakaways in formation (advisors at t... | free |
+| `search_ria_move_indicators` | advisor_dfx_id?, cursor?, firm?, firm_dfx_id?, kind?, limit?, ... | The observed pre-move indicators DFX holds, per advisor: a prior co-move teammate or the team's senior member left the firm (with who and where to), a fifth or ... | free |
+| `search_ria_outside_business` | category?, category_group?, current_only?, cursor?, firm_crd?, investment_related?, ... | Outside-business entries from the advisor's own Form U4 disclosure, reviewed extraction: the company, what it does and on what basis, the advisor's role (owner,... | free |
+| `get_ria_outside_business` | company_id?, dfx_id? | With an advisor (dfx:ria: id or individual CRD): every reviewed outside-business entry, the measured dimensions (entrepreneurial, breadth, community, network, r... | free |
 | `search_private_credit` | bdc_advisers_only?, class?, cursor?, entity_type?, held_only?, industry?, ... | The capital structure graph behind private markets, built from every BDC's schedule of investments each quarter since 2022 | free |
 | `get_credit_provider` | dfx_id | A credit manager: its classes with basis, the BDCs it advises (from each BDC's own 10-K) with their latest schedules, its credit funds on Form ADV, its sponsor ... | free |
 | `get_bdc_portfolio` | as_of?, cursor?, dfx_id, include_equity?, limit?, sort? | Every position a BDC tagged at one quarter end (the latest unless as_of is given), each in the filer's own figures: borrower, instrument, kind, lien, principal,... | free |
@@ -162,7 +165,7 @@ not have to guess and does not have to be told:
 | `search_entities` | active_only?, asset_class?, city?, cursor?, domain?, entity_type?, ... | One search across family offices, independent sponsors and their capital providers, private companies, venture firms, private equity firms and funds, and real e... | free |
 | `resolve_name` | domain?, entity_type?, limit?, name | Resolve a firm, fund, person or company name to canonical dfx ids from the Data Factory's index of every published name and alias (former names, dbas, legal nam... | free |
 | `get_entity` | dfx_id, event_limit?, evidence_limit?, include?, relationship_limit? | For any DFX id: the full card, published relationships with sources and dates, recent events, evidence rows (the observation each fact traces to), cross-graph s... | free |
-| `search_people` | cross_graph_only?, current_only?, domain?, investment_responsibility?, limit?, organization_dfx_id?, ... | Investment professionals, principals and family office staff as names with titles, roles, seniority, investment responsibility, organisation and tenure, from pu... | free |
+| `search_people` | cross_graph_only?, current_only?, domain?, investment_responsibility?, limit?, organization?, ... | Investment professionals, principals and family office staff as names with titles, roles, seniority, investment responsibility, organisation and tenure, from pu... | free |
 | `search_relationships` | current_only?, dfx_id, limit?, rel_type? | Every published relationship touching one entity (EMPLOYS, PRINCIPAL_OF, INVESTED_IN, CO_INVESTED_WITH, MANAGES, OWNS, BOARD_MEMBER_OF, VEHICLE_OF, ...), each w... | free |
 | `relationship_path` | from_dfx_id, max_hops?, to_dfx_id | An evidence-backed path between two DFX ids across every graph: each hop is a published relationship with its source, or a SAME_AS identity link by shared CRD/C... | free |
 | `search_events` | dfx_id?, domain?, event_type?, exclude_routine?, limit?, min_significance?, ... | Dated events across family offices, sponsors, venture, private equity and real estate: investments announced, vehicles formed, Form D and ADV filings, people jo... | free |
@@ -174,11 +177,18 @@ not have to guess and does not have to be told:
 | `who_should_care` | dfx_id?, event_id?, limit? | Given an entity or an event id: who is likely to care and why | free |
 | `search_documents` | dfx_id?, limit?, query | Full-text search over DFX's document index: verbatim passages from the documents the graph already points at (SEC filings and BDC schedules of investments, publ... | free |
 | `find_real_estate_lenders` | band_max_usd?, band_min_usd?, city?, limit?, property_type, since?, ... | Lenders ranked on the commercial real estate loans they ORIGINATED, from CMBS loan-level filings (SEC ABS-EE): same property type, loans in the states and city ... | free |
-| `search_cmbs_loans` | cursor?, distress?, limit?, loan_keys?, maturity_from?, maturity_to?, ... | Loans on the ACTIVE CMBS tape (SEC ABS-EE, each loan's latest monthly reading, read within 100 days of the newest period) with the servicer's own fields: paymen... | free |
+| `search_cmbs_loans` | cursor?, distress?, dscr_max?, limit?, loan_keys?, maturity_from?, ... | Loans on the ACTIVE CMBS tape (SEC ABS-EE, each loan's latest monthly reading, read within 100 days of the newest period) with the servicer's own fields: paymen... | free |
 | `search_signals` | affected_dfx_id?, cursor?, domain?, family?, include_audience?, limit?, ... | The governed signal layer the site ranks by (actionable now, public or sellable only): each card names its family, the subject with its dfx id, what changed, wh... | free |
 | `search_opportunities` | condition_kind?, cursor?, family?, intelligence_class?, limit?, min_rank?, ... | Opportunity summaries: the condition (credit deterioration, refinancing window, lender group change, capital raised, advisor movement, servicing distress ...), ... | free |
+| `who_to_contact` | dfx_id?, limit?, opportunity_id?, organization?, purpose? | For one organization (dfx_id, or its name in `organization`, resolved through the identity layer so every graph the institution is on is read) or one opportunit... | free |
 | `search_forward_opportunities` | contact?, cursor?, entity_dfx_id?, evidence?, limit?, max_economic?, ... | Forward opportunities across DFX: an entity, the event a measured pattern points to (a borrower reaching non-accrual, a pension plan re-upping with a manager, a... | free |
 | `get_forward_signal_ledger` | cursor?, limit?, signal_key?, status?, vertical? | The ledger behind every forward claim: for each pattern, its definition, population, test period, base rate, rate among entities showing it, lift with its inter... | free |
+| `search_cmbs_resolutions` | cursor?, limit?, min_loss_usd?, property_type?, resolution?, since?, ... | Every conduit CMBS loan whose servicer reported a foreclosure, REO or deed in lieu workout (SEC ABS-EE), with how it ended: resolved or still pending, the SEC l... | free |
+| `get_company_coverage` | naics, state? | The Census Bureau's count of firms (Statistics of US Businesses 2022, all firms and firms with 20 or more employees) in one NAICS code (2 to 6 digits) and one s... | free |
+| `search_13f_sector_holders` | family_capital_only?, limit?, period?, sector?, sic?, state? | Family offices (and, with family_capital_only false, every 13F filer on the family office graph) that hold public positions in a sector per their latest Form 13... | free |
+| `search_bdc_language_change` | changed_only?, filed_from?, limit?, section?, term | For a term (software, tariffs, AI, healthcare, energy, consumer, office, crypto or any word), every active BDC whose latest 10-K or 10-Q names it, compared sent... | free |
+| `rank_sponsor_capital` | deal_company?, deal_sponsor?, ebitda_max_usd?, ebitda_min_usd?, group?, limit?, ... | The capital parties named on announced independent sponsor transactions, aggregated | free |
+| `get_sponsor_portfolio` | dfx_id?, limit?, name?, status? | Every portfolio holding DFX has for one private equity or independent sponsor firm (current and exited): company, state, listed sector, fund, platform or add-on... | free |
 
 **Start with `what_can_dfx_answer`** if you do not know what to ask for. It says no
 clearly when the answer is no, and it records the ask, so questions DFX cannot answer
@@ -190,11 +200,11 @@ shape what gets built next.
 
 The same connection answers across three more DFX graphs, with one id scheme (`dfx:fo:`, `dfx:isi:`, `dfx:vc:`, and the real estate ids above), one response contract, and cross-graph identity by shared CRD, CIK or EIN only. A same-name entity on another graph is returned as a candidate, never merged.
 
-**Family offices.** 2,492 offices on the graph (825 candidates, 161 confirmed multi-family, 339 probable single-family, 122 outsourced), 4,238 foundations, 753 offices with 13F positions, 355 with observed direct investments. A candidate is a name, never a class; AUM, RAUM and 13F value are three numbers and are never substituted for one another.
+**Family offices.** 2,557 offices on the graph (694 candidates, 156 confirmed multi-family, 332 probable single-family, 139 outsourced), 4,238 foundations, 748 offices with 13F positions, 394 with observed direct investments. A candidate is a name, never a class; AUM, RAUM and 13F value are three numbers and are never substituted for one another.
 
-**Independent sponsors.** 3,986 sponsors, 10,025 capital providers, 97,293 private companies with Department of Labor plan-filing history of which 17,064 carry a transition signal, 207,130 computed company-to-sponsor matches with reasons and blockers, 1,492 announced transactions. A plan-filing signal is one year lagged.
+**Independent sponsors.** 4,163 sponsors, 10,658 capital providers, 97,295 private companies with Department of Labor plan-filing history of which 17,064 carry a transition signal, 317,710 computed company-to-sponsor matches with reasons and blockers, 2,389 announced transactions. A plan-filing signal is one year lagged.
 
-**Venture capital.** None firms (None with a fund raising in the last 18 months), 76,934 funds with every fund amount kept apart (54,574 with Form D sold), 113,204 people, 47,493 companies and 30,795 rounds. Stated sectors are populated on None firms today, so a sector filter on firms answers NOT_COVERED rather than an empty list; a round is never a check.
+**Venture capital.** None firms (None with a fund raising in the last 18 months), 76,935 funds with every fund amount kept apart (54,574 with Form D sold), 113,358 people, 47,452 companies and 30,800 rounds. Stated sectors are populated on None firms today, so a sector filter on firms answers NOT_COVERED rather than an empty list; a round is never a check.
 
 **Across all of them:** `search_entities`, `get_entity` (everything on one id: card, relationships, events, evidence, cross-graph links), `search_people`, `search_relationships`, `relationship_path` (how X connects to Y, every hop an evidenced edge), `search_events`, `verify` (SUPPORTED, PARTIALLY_SUPPORTED, CONTRADICTED or UNKNOWN, with the observations), and the economic tools `find_capital_for_opportunity`, `find_opportunities_for_capital`, `explain_match` (reasons and blockers, never a bare score), `why_now` and `who_should_care`.
 
@@ -303,7 +313,7 @@ to be filed, so the 19,821 loans on the tape are reached here while
 3,281 maturity events are reachable through the event search.
 
 **How the loans spread.** Of the 19,821 loans, 1,765 mature inside
-the default 548-day window, and they are not evenly spread. Measured 2026-09-25:
+the default 548-day window, and they are not evenly spread. Measured 2026-09-29:
 
 | State | Loans maturing in the next 548 days |
 |---|---|
