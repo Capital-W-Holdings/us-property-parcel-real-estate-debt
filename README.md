@@ -38,7 +38,7 @@ empty list, so this server refuses unknown arguments with the served vocabulary
 attached.
 
 > Every number on this page is measured against production, not typed. Last measured
-> **2026-09-29**. Call `dfx_coverage` for the same grid at the moment you read it.
+> **2026-09-30**. Call `dfx_coverage` for the same grid at the moment you read it.
 
 ---
 
@@ -200,11 +200,11 @@ shape what gets built next.
 
 The same connection answers across three more DFX graphs, with one id scheme (`dfx:fo:`, `dfx:isi:`, `dfx:vc:`, and the real estate ids above), one response contract, and cross-graph identity by shared CRD, CIK or EIN only. A same-name entity on another graph is returned as a candidate, never merged.
 
-**Family offices.** 2,557 offices on the graph (694 candidates, 156 confirmed multi-family, 332 probable single-family, 139 outsourced), 4,238 foundations, 748 offices with 13F positions, 394 with observed direct investments. A candidate is a name, never a class; AUM, RAUM and 13F value are three numbers and are never substituted for one another.
+**Family offices.** 2,559 offices on the graph (693 candidates, 156 confirmed multi-family, 333 probable single-family, 139 outsourced), 4,238 foundations, 748 offices with 13F positions, 394 with observed direct investments. A candidate is a name, never a class; AUM, RAUM and 13F value are three numbers and are never substituted for one another.
 
-**Independent sponsors.** 4,163 sponsors, 10,658 capital providers, 97,295 private companies with Department of Labor plan-filing history of which 17,064 carry a transition signal, 317,710 computed company-to-sponsor matches with reasons and blockers, 2,389 announced transactions. A plan-filing signal is one year lagged.
+**Independent sponsors.** 4,167 sponsors, 10,660 capital providers, 97,287 private companies with Department of Labor plan-filing history of which 17,064 carry a transition signal, 317,710 computed company-to-sponsor matches with reasons and blockers, 2,397 announced transactions. A plan-filing signal is one year lagged.
 
-**Venture capital.** None firms (None with a fund raising in the last 18 months), 76,935 funds with every fund amount kept apart (54,574 with Form D sold), 113,358 people, 47,452 companies and 30,800 rounds. Stated sectors are populated on None firms today, so a sector filter on firms answers NOT_COVERED rather than an empty list; a round is never a check.
+**Venture capital.** None firms (None with a fund raising in the last 18 months), 76,936 funds with every fund amount kept apart (54,574 with Form D sold), 113,590 people, 47,455 companies and 30,805 rounds. Stated sectors are populated on None firms today, so a sector filter on firms answers NOT_COVERED rather than an empty list; a round is never a check.
 
 **Across all of them:** `search_entities`, `get_entity` (everything on one id: card, relationships, events, evidence, cross-graph links), `search_people`, `search_relationships`, `relationship_path` (how X connects to Y, every hop an evidenced edge), `search_events`, `verify` (SUPPORTED, PARTIALLY_SUPPORTED, CONTRADICTED or UNKNOWN, with the observations), and the economic tools `find_capital_for_opportunity`, `find_opportunities_for_capital`, `explain_match` (reasons and blockers, never a bare score), `why_now` and `who_should_care`.
 
@@ -313,7 +313,7 @@ to be filed, so the 19,821 loans on the tape are reached here while
 3,281 maturity events are reachable through the event search.
 
 **How the loans spread.** Of the 19,821 loans, 1,765 mature inside
-the default 548-day window, and they are not evenly spread. Measured 2026-09-29:
+the default 548-day window, and they are not evenly spread. Measured 2026-09-30:
 
 | State | Loans maturing in the next 548 days |
 |---|---|
